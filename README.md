@@ -1,320 +1,384 @@
+<div align="center">
+
+<img src="assets/images/solfit-logo.png" alt="SolFit" width="120" />
+
 # SolFit
 
-> **The Movement Layer for Solana.**
-> AI Fitness dApp. Tracked by AI. Owned by you.
+### Move · Earn · Evolve
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-D97706.svg)](LICENSE)
-![Solana dApp Store](https://img.shields.io/badge/Solana%20dApp%20Store-Live-14F195)
-[![Version](https://img.shields.io/badge/version-v1.3.3-2D2926)](https://github.com/Jamielimq/kinlog/releases)
-[![MONOLITH](https://img.shields.io/badge/MONOLITH-Honorable%20Mention-D97706)](https://blog.solanamobile.com)
+**AI squat tracking on your phone, tied to your Solana wallet.**
+On-device pose detection counts every rep. Your wallet is your account. Streaks, goals and badges follow you.
 
-Built by a licensed Physical Therapist & Athletic Trainer.
+[![Download for Android](https://img.shields.io/badge/Download-Android%20APK-52765A?style=for-the-badge&logo=android&logoColor=white)](https://solana.digitiumlabs.com)
+[![Version](https://img.shields.io/badge/version-1.4.0-26372C?style=for-the-badge)](https://github.com/Nakshatra480/solfit-releases/releases/latest)
+
+![Solana](https://img.shields.io/badge/Solana-Mainnet-9945FF?logo=solana&logoColor=white)
+![Mobile Wallet Adapter](https://img.shields.io/badge/Solana%20Mobile-Wallet%20Adapter-14F195)
+![ORE](https://img.shields.io/badge/ORE-rounds%20%2B%20rewards-C9A227)
+![Expo](https://img.shields.io/badge/Expo-54-000020?logo=expo&logoColor=white)
+![React Native](https://img.shields.io/badge/React%20Native-0.81-61DAFB?logo=react&logoColor=black)
+![MediaPipe](https://img.shields.io/badge/MediaPipe-Pose-0097A7?logo=google&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-Auth%20%2B%20Firestore-FFCA28?logo=firebase&logoColor=black)
+![License](https://img.shields.io/badge/license-MIT-788477)
+
+[Download](#-download) · [Features](#-features) · [Architecture](#-architecture) · [Solana](#-how-solana-is-used) · [ORE](#-ore-integration-locked-in) · [Develop](#-development)
+
+</div>
 
 ---
 
-## Status
+<div align="center">
+<img src="docs/screenshots/splash.png" width="15%" alt="Launch" />
+<img src="docs/screenshots/home.png" width="15%" alt="Home" />
+<img src="docs/screenshots/workout.png" width="15%" alt="Workout" />
+<img src="docs/screenshots/badges.png" width="15%" alt="Badges" />
+<img src="docs/screenshots/goals.png" width="15%" alt="Goals" />
+<img src="docs/screenshots/profile.png" width="15%" alt="Profile" />
+<br/>
+<sub>Launch · Home · Workout · Badges · Goals · Profile (release build, Natural Motion theme)</sub>
+</div>
+
+---
+
+## 📲 Download
 
 | | |
 |---|---|
-| **Live** | 🟢 Solana Mobile dApp Store |
-| **Version** | v1.3.3 |
-| **Reviews** | 22+ · ★★★★ |
-| **Awards** | MONOLITH Honorable Mention (Solana Mobile, 2026) |
-| **License** | MIT |
-| **Platform** | Solana Mobile · Seeker · Android |
+| **Get it** | **[solana.digitiumlabs.com](https://solana.digitiumlabs.com)** → *Download for Android* |
+| **Direct APK** | [`solfit-android.apk`](https://github.com/Nakshatra480/solfit-releases/releases/latest/download/solfit-android.apk) (always the latest release) |
+| **Requires** | Android 7.0+, a Solana wallet app such as Phantom or Solflare, internet for sign-in and sync |
+| **Verify** | each release lists its SHA-256, and every APK is signed with the same SolFit release key |
+
+> The APK is distributed directly by SolFit, not through Google Play. Android will ask you to allow installs from your browser the first time.
 
 ---
 
-## Philosophy
+## ✨ Features
 
-> **As AI advances, human movement becomes more valuable.**
-
-The more AI does for us, the less we move.
-
-But movement is something only humans can do.
-
-That is where SolFit focuses.
-
----
-
-## The Question That Started Everything
-
-**What does it mean to be human in the age of AI?**
-
-I am a physical therapist and athletic trainer. Every day, I evaluate how people move. How they act. How they function. How they live.
-
-The population is aging faster. Desk jobs are multiplying. The average person now sits for over 10 hours a day. Everyone knows they should exercise. Most do not know if they are doing it right. And ironically, as AI gets smarter, humans have even less reason to use their bodies.
-
-We outsource our thinking to AI. We outsource our memory to AI.
-
-But there is one thing AI cannot do for you.
-
-**It cannot sweat for you. It cannot endure for you. It cannot get back up for you.**
-
-The more AI advances, the more physical movement becomes a distinctly human act. Thinking, judging, creating. AI can do those things. But the moment you decide to do one more rep when your legs are burning. The moment you stand back up. That is still yours. That will always be yours.
-
----
-
-## Why Web3?
-
-Web3 is built on ownership. You own your wallet, your assets, your history.
-
-But what about your body?
-
-Your fitness history belongs to a corporation. Your achievements disappear when the app does.
-
-SolFit puts that on chain. Your effort, permanently yours.
-
-Every exercise you complete is recorded on Solana. Permanently. Immutably. Owned by you. Not as a number in a database. As an on-chain proof of effort. A badge that no one can take away.
-
-**The most human thing you do deserves to be owned by you.**
-
-This is why Web3 people should care about fitness. And why fitness people should care about Web3. Movement is the original proof of work.
-
----
-
-## What is SolFit?
-
-SolFit is a fitness dApp that uses AI motion recognition to count squat reps in real time. No wearables. No gym equipment. Just your phone and your body.
-
-- Complete your daily 30-squat goal
-- Build streaks
-- Take on 3-Day and 7-Day Challenges
-- Earn badge rewards on Solana Mainnet
-- SKR stakers unlock exclusive Legendary badges
-
-Built by a licensed Physical Therapist who got tired of watching people move less and less.
-
----
-
-## The Algorithm Came From the Clinic
-
-The squat detection is not arbitrary.
-
-MediaPipe Pose Landmarker tracks 33 joint positions in real time. SolFit uses three: **hip, knee, ankle.**
-
-- **110° or below** = counted as "down"
-- **150° or above** = counted as "up"
-- Only this sequence = 1 rep
-
-Camera noise does not get a vote. The knee angle is smoothed before it is judged, a phase
-only flips after three consecutive frames agree, and any frame where the joints are not
-clearly visible is thrown out instead of counted. One bad frame can no longer invent a rep.
-
-**Why these numbers?**
-
-Too shallow and there is no training effect. Too deep and you stress the knee cartilage. These thresholds come from years of working with athletes and patients. From a physical therapist who has watched thousands of squats.
-
-These thresholds were set with one priority. Making movement accessible. The goal is habit formation, not perfection. Low enough to be effective. Forgiving enough to keep you coming back.
-
-For the first time, years of clinical knowledge became a single algorithm.
-
----
-
-## Features
-
-- **AI Motion Detection** · MediaPipe Pose Landmarker, clinically calibrated squat counting
-- **Real-time Angle Display** · See your knee angle live on screen
-- **Daily Goals** · 30 squats per day with weekly and monthly targets
-- **3-Day & 7-Day Challenges** · Streak-building mechanics for daily habits
-- **Badge Rewards** · 34 badges across 4 rarity tiers, issued on Solana Mainnet
-- **SKR Staker Rewards** · Exclusive Legendary badges for SKR stakers
-- **Streak Tracking** · Firebase Firestore tracks your consistency
-- **On-chain Records** · Every achievement permanently recorded on Solana
-- **No Wearables Needed** · Just your phone camera
-- **Privacy First** · All pose detection runs on device. Your camera never leaves your phone.
-
----
-
-## Tech Stack
-
-| Layer | Technology |
+| | |
 |---|---|
-| **Mobile** | React Native (Expo bare workflow) |
-| **Motion AI** | MediaPipe Pose Landmarker (native Kotlin module) |
-| **Camera** | react-native-vision-camera |
-| **Blockchain** | Solana Mainnet |
-| **Wallet** | Solana Mobile Wallet Adapter (MWA) |
-| **Badge Rewards** | Metaplex (compressed badge migration planned for Phase 4) |
-| **SKR Staking** | Helius API (3-layer lookup) |
-| **Backend** | Firebase Firestore |
-| **Target Device** | Solana Seeker (Android) |
-| **Open Source** | github.com/Jamielimq/kinlog · MIT |
-
-**Latency**: Sub-second pose inference
-**Fees**: ~0.001 SOL per badge issuance
-**Privacy**: On-device inference. No video uploaded or recorded.
-**Surface**: Mobile-first. On-chain.
+| 🎥 **Rep counting on the device** | MediaPipe Pose runs in a native Kotlin module. The camera feed never leaves the phone and is never recorded. |
+| 🦵 **Clinically tuned judgement** | A rep is `knee ≤ 110°` *and* a real hip drop, then `knee ≥ 150°`. Thresholds come from physical-therapy practice and are verified against a standing-still set whose correct answer is 0. |
+| 👛 **Wallet = account** | Sign In With Solana through the Mobile Wallet Adapter: one signed message, no transaction, no fee, no password. |
+| 🔥 **Daily habit loop** | 30 squats a day, streaks, weekly progress and a monthly calendar. |
+| 🏅 **Badges** | Lifetime milestones, streaks, monthly medals and an SKR-staker badge. Claims are recorded on Solana with a memo. |
+| 🟩 **Locked In (ORE)** | A deposit-backed 3-day challenge whose reward tier is drawn from an ORE mining round. See [ORE integration](#-ore-integration-locked-in). |
+| 🌿 **Natural Motion design** | Calm, readable UI with an animated launch screen and exactly five tabs: Home, Workout, Badges, Goals and Profile. |
 
 ---
 
-## How It Works
+## 🏗 Architecture
 
-1. Open the app and connect your Solana wallet
-2. Go to the Workout screen. Stand **sideways** to the camera, with your full body in frame
-3. The AI tracks your hip, knee, and ankle in real time
-4. Squat to 110° knee angle or below → stand back to 150° or above → that is 1 rep
-5. Hit 30 reps to complete your daily goal
-6. Earn points. Build streaks. Receive badge rewards as permanent proof
-7. Stake SKR to unlock Legendary badges
+### High-level design
+
+```mermaid
+flowchart LR
+    subgraph Phone["📱 Android phone"]
+        direction TB
+        UI["SolFit app<br/>Expo · React Native · expo-router"]
+        Pose["PoseLandmarker<br/>Kotlin + MediaPipe<br/>(on-device)"]
+        Wallet["Wallet app<br/>Phantom · Solflare · Seed Vault"]
+        UI <-->|"native bridge<br/>6 leg landmarks"| Pose
+        UI <-->|"Mobile Wallet Adapter<br/>authorize · sign"| Wallet
+    end
+
+    subgraph Backend["☁️ SolFit backend"]
+        direction TB
+        Auth["Sign-in server<br/>Node 22 on Render<br/>/authNonce · /authVerify"]
+        FAuth["Firebase Auth<br/>custom tokens<br/>uid = wallet address"]
+        FS[("Cloud Firestore<br/>asia-south1<br/>owner-only rules")]
+        Auth -->|"Admin SDK"| FAuth
+        Auth -->|"one-time nonce record"| FS
+    end
+
+    subgraph Solana["◎ Solana mainnet"]
+        direction TB
+        RPC["RPC<br/>(Helius or public)"]
+        Memo["Memo program<br/>badge claims"]
+        SKR["SKR staking<br/>program"]
+        LI["Locked In<br/>Anchor program"]
+        ORE["ORE mining program<br/>Board · Round"]
+        LI -->|"reads round entropy"| ORE
+    end
+
+    Site["🌐 solana.digitiumlabs.com<br/>download page · assetlinks.json"]
+
+    UI -->|"HTTPS"| Auth
+    UI -->|"signInWithCustomToken"| FAuth
+    UI <-->|"realtime onSnapshot"| FS
+    UI -->|"reads · sends signed tx"| RPC
+    RPC --- Memo & SKR & LI
+    Wallet -.->|"verifies app identity"| Site
+```
+
+### Layers
+
+| Layer | What runs there | Key files |
+|---|---|---|
+| **App shell** | Expo SDK 54, React Native 0.81 (new architecture), expo-router with 5 tabs, animated startup loader | `app/_layout.tsx`, `app/(tabs)/`, `components/StartupLoader.tsx` |
+| **Pose detection** | Native `PoseLandmarker` (MediaPipe Tasks, VIDEO mode), a 100 ms snapshot loop, and a rep state machine | `android/.../PoseLandmarkerModule.kt`, `hooks/usePoseLandmarker.ts`, `app/(tabs)/workout.tsx` |
+| **Wallet** | Mobile Wallet Adapter session, cached auth token, Sign In With Solana | `context/WalletContext.tsx`, `lib/signIn.ts` |
+| **Identity** | Signature check, then a Firebase custom token whose uid is the wallet address | `functions/src/standalone.ts`, `functions/src/auth/` |
+| **Data** | Firestore: subcollections are the source of truth, and the user document is a cache | `firestore.rules`, `hooks/*` |
+| **On-chain** | Memo claims, SKR stake reads, Locked In program, ORE round reads | `lib/badgeClaim.ts`, `hooks/useSkrStaking.ts`, `onchain/`, `lib/lockedIn/` |
+| **Theme** | Natural Motion tokens shared by every screen | `constants/naturalMotion.ts` |
+
+### Workout pipeline
+
+```mermaid
+flowchart LR
+    Cam["📷 Camera<br/>VisionCamera"] -->|"snapshot every 100 ms<br/>quality 30"| File["temp JPEG<br/>(deleted after use)"]
+    File --> PL["PoseLandmarker.detectPose<br/>MediaPipe, VIDEO mode"]
+    PL -->|"hip · knee · ankle<br/>× 2 legs + visibility"| Side["measureSide()<br/>pick the more visible leg"]
+    Side --> Gate{"visibility ≥ 0.5<br/>and joints in<br/>anatomical order?"}
+    Gate -- no --> Hold["hold last angle<br/>'step back' after 1 s"]
+    Gate -- yes --> SM{"state machine"}
+    SM -->|"knee ≤ 110° and<br/>hip drop ≥ 20% torso"| Down["DOWN"]
+    Down -->|"knee ≥ 150°"| Rep["+1 rep"]
+    Rep --> Save["save workout<br/>points · streak · badges"]
+```
+
+The judgement runs on the **raw angle of a single frame**: no smoothing and no multi-frame confirmation. On-device measurement showed that both cost real reps at the ~4 fps this pipeline achieves. The 0.5 confidence gate and the anatomical-order check are what stop phantom reps. Details are in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ---
 
-## Screenshots
+## ◎ How Solana is used
 
-### Core Experience
+| Solana service | Used for | How |
+|---|---|---|
+| **Mobile Wallet Adapter** | connecting the user's wallet | `transact()` → `authorize` with the app identity (name, URI, icon) on `solana:mainnet`. The auth token is cached, so later actions reauthorize silently. |
+| **Sign In With Solana** | logging in without a password | The server issues a one-time nonce. The wallet signs a SIWS message bound to `solfit.digitiumlabs.com`, and the server verifies the ed25519 signature. |
+| **Digital Asset Links** | proving the app is genuine | `/.well-known/assetlinks.json` pairs `com.solfit.app` with the release key's SHA-256, so wallets can show a verified identity. |
+| **Memo program** | permanent badge-claim records | A claim is one transaction: a 0.001 SOL transfer plus a memo such as `solfit:badge:lifetime:<id>`. It is simulated before the wallet opens and confirmed afterwards. |
+| **SKR staking program** | the SKR Staker badge | Derive the user's `UserStake` PDA, read `shares` and the pool's `share_price` (both `u128`), and award the badge at ≥ 1 SKR. That takes 2 `getAccountInfo` calls with no history scan. |
+| **SPL Token** | Locked In deposits and rewards | 100 SKR deposits into a per-cohort PDA vault, and ORE rewards paid from a PDA vault. |
+| **Anchor program** | Locked In rules | Deposits, success marks, picks, settlement and claims, with invariants enforced on-chain. |
+| **ORE mining rounds** | fair randomness for rewards | See below. |
 
-| Home | Squat (Start) | Squat (Complete) |
-|:---:|:---:|:---:|
-| <img src="assets/screenshots/1.%20SolFit-Home.png" width="240" alt="Home" /> | <img src="assets/screenshots/9.%20SolFit-Squat%20Start.png" width="240" alt="Squat Start" /> | <img src="assets/screenshots/10.%20SolFit-Squat%20End.png" width="240" alt="Squat End" /> |
+### Sign-in sequence
 
-### Goals & Achievements
+```mermaid
+sequenceDiagram
+    autonumber
+    actor U as User
+    participant A as SolFit app
+    participant S as Sign-in server
+    participant W as Wallet (MWA)
+    participant F as Firebase Auth
+    participant D as Firestore
 
-| Goals | Badges | Profile |
-|:---:|:---:|:---:|
-| <img src="assets/screenshots/3.%20SolFit-Goal.png" width="240" alt="Goals" /> | <img src="assets/screenshots/2.%20SolFit-Badge.png" width="240" alt="Badges" /> | <img src="assets/screenshots/5.%20SolFit-Profile.png" width="240" alt="Profile" /> |
+    A->>S: warm-up GET /healthz (at launch)
+    U->>A: tap Connect Wallet
+    A->>S: GET /authNonce
+    S-->>A: SIWS payload (domain, nonce = HMAC, 5 min expiry)
+    A->>W: authorize(identity, sign_in_payload)
+    W->>U: "Sign in to SolFit" (no transaction, no fee)
+    U-->>W: approve
+    W-->>A: address + signed message + signature
+    A->>S: POST /authVerify
+    S->>S: check domain, URI, address, nonce HMAC and expiry, ed25519 signature
+    S->>D: create authNonces/{nonce} (atomic, so a replay gets 409)
+    S->>F: createCustomToken(uid = wallet address)
+    S-->>A: custom token
+    A->>F: signInWithCustomToken
+    F-->>A: session (uid = wallet)
+    A->>D: read and write users/{wallet}/** (owner-only rules)
+```
 
-### Challenges
+**Security properties:** no database write happens before a valid signature; nonces are single-use and expire after 5 minutes; tokens are minted only server-side; and Firestore refuses any request whose `auth.uid` isn't the wallet in the path. The mobile app ships no credentials beyond Firebase's public client config.
 
-| Challenges | 3-Day Challenge | 7-Day Challenge |
-|:---:|:---:|:---:|
-| <img src="assets/screenshots/6.%20SolFit-Challenge.png" width="240" alt="Challenges" /> | <img src="assets/screenshots/7.%20SolFit-3days%20Challenge.png" width="240" alt="3-Day Challenge" /> | <img src="assets/screenshots/8.%20SolFit-7days%20Challenge.png" width="240" alt="7-Day Challenge" /> |
+### Badge claim
 
-### SKR Staker Exclusive
+```mermaid
+flowchart LR
+    B["Badge earned<br/>(Firestore)"] --> T["Build tx<br/>transfer 0.001 SOL<br/>+ memo 'solfit:badge:…'"]
+    T --> Sim["simulate"] --> Sign["wallet signs & sends<br/>(MWA)"]
+    Sign --> Pend["signature kept on phone<br/>(pendingClaims)"]
+    Pend --> Conf{"confirmed?"}
+    Conf -- yes --> Rec["one Firestore transaction:<br/>badge record + points"]
+    Conf -- failed --> Drop["drop, allow retry"]
+    Conf -- pending --> Re["re-check every 15 s"]
+```
 
-<p align="center">
-  <img src="assets/screenshots/4.%20SolFit-SKR%20Staking%20Badge.png" width="320" alt="SKR Legendary Badge" />
-</p>
+Claim IDs are fixed (`lb-<badge>`, `mb-<type>-<YYYYMM>`, `sb-<badge>-<cohort>`), so a retry can never add points twice.
 
 ---
 
-## Badge Rewards
+## 🟩 ORE integration: Locked In
 
-34 unique badges across 4 rarity tiers.
+**Locked In** turns a 3-day squat challenge into a commitment with a fair, verifiable reward.
 
-| Tier | Examples |
+> Lock in **100 SKR**, which you get back 100%, pass or fail. Do 30 squats a day for 3 days. Finish, and pick one Square on a 5×5 board. An **ORE mining round** decides its tier, and the reward is paid in **ORE**.
+
+### Flow
+
+```mermaid
+flowchart TB
+    J["Join: deposit 100 SKR<br/>+ 0.001 SOL Fee<br/>(one deposit instruction)"] --> V[("Cohort SKR vault<br/>PDA")]
+    J --> D["30 squats a day × 3<br/>(day = 15:00 UTC)"]
+    D -->|"server attester:<br/>mark_success"| P["pick_square<br/>target = ORE round_id + 1"]
+    P --> W["wait for that ORE round<br/>(~96 s rounds)"]
+    W --> S["settle (anyone may call)<br/>recompute the result from the<br/>round's slot_hash entropy"]
+    S --> Tier{"tier"}
+    Tier -->|"motherlode<br/>(1/500)"| L["Legendary: 20 × Common"]
+    Tier -->|"winning square<br/>(1/25)"| R["Rare: 2 × Common"]
+    Tier -->|"otherwise"| C["Common ≈ the Fee's value"]
+    L & R & C --> Cl["claim_reward<br/>ORE from the reward vault<br/>(PDA) to the user"]
+    V -->|"after end: withdraw,<br/>or auto-return on day 6"| Back["100% of the SKR<br/>back to the depositor"]
+```
+
+### How ORE is read, without trusting anyone
+
+| Step | Detail |
 |---|---|
-| 🟫 **Common** | First Squat, 3-Day Streak, Daily Goal |
-| 🟢 **Uncommon** | Week Warrior, 50 Squats, Consistency |
-| 🔵 **Rare** | Monthly Master, 500 Squats, Iron Will |
-| 🟡 **Legendary** | Centurion, Streak Legend, Elite Athlete |
-| 🟠 **Legendary · SKR exclusive** | Unlocked by staking SKR. Unique to stakers only. |
+| **Program** | ORE mining `oreV3EG1i9BEgiAJ8b177Z2S2rMarzak4NMv1kULvWv`, mint `oreoU2P8bN6jkk3jbaiVxYnG1dCXcYxwhwyK9jSybcp` |
+| **Board** | Fixed address; `round_id` read at offset 8 to learn the current round |
+| **Target round** | A pick records `round_id + 1`, so the result is unknowable when you pick |
+| **Round account** | PDA `["round", id]`, 952 bytes; owner, PDA, discriminator and length are validated before reading `slot_hash` |
+| **Randomness** | `rng` = XOR of `slot_hash`'s four u64 words; winning square = `rng % 25`; motherlode = `reverse_bits(rng) % 500 == 0` |
+| **Settlement** | Deterministic and caller-independent; picks settle strictly in recording order; per-cohort caps are 1 Legendary and 3 Rare |
+| **Edge cases** | A round with no entropy is retargeted to the next one; a round already closed pays Common (no re-draw) |
 
-Every badge is issued on Solana Mainnet. ~0.001 SOL per badge.
+The program doesn't link `ore-api`. The round math is ported and tested against ORE's own events, and the derivation was checked across all 1,199 live Round accounts on mainnet: it flagged exactly the 3 motherlode rounds.
 
----
+### On-chain guarantees
 
-## SKR Staking Integration
+- 🔒 **Deposits only go back to the depositor.** No instruction takes a destination for SKR.
+- 🔒 **Nothing leaves an SKR vault before the cohort ends.** There is no cancel instruction.
+- 🔒 **The only way ORE leaves the reward vault is `claim_reward`.** There is no admin withdrawal.
+- 🔒 **Rewards are reserved up front**: 52 × Common per cohort, so promised ORE can always be paid.
+- 🔑 **Separated keys**: a Squads 2-of-3 admin, plus server keys for cohort creation, attestation and the crank. None of them can redirect funds.
 
-SolFit reads your SKR stake on-chain to unlock exclusive content.
+### Status in this deployment
 
-- **Program**: `SKRskrmtL83pcL4YqLWt6iPefDqwXQWHSw9S9vz94BZ`
-- **Minimum**: 1 SKR staked
-- **3-layer lookup**:
-  1. Firebase cache (fast path)
-  2. Helius enhanced transaction history (fallback)
-  3. getProgramAccounts (last resort)
-- **Verification**: Real-time. No claim button. The chain is the source of truth.
+| Part | Status |
+|---|---|
+| Anchor program (`onchain/programs/locked_in`) | complete; verified build deployed to mainnet by the original Kinlog project (`9vG8Qcwv…`, Squads-administered) |
+| Server jobs (`onWorkoutCreate`, `everyMinute`, `daily`) | in `functions/`; **not deployed for SolFit** |
+| App screens (`app/locked-in/`, `components/lockedIn/`) | included; the Home card appears only when live cohorts exist |
 
-If you stake, you qualify. If you do not, you do not.
-
----
-
-## Roadmap
-
-### Phase 1 · Foundation (Q4 2025 to Q2 2026) ✅
-- MediaPipe pose detection
-- Mobile Wallet Adapter integration
-- Badge reward system
-- MONOLITH Hackathon Honorable Mention
-
-### Phase 2 · Movement Layer (Q2 2026) ✅ Live
-- SKR staking integration
-- 3-Day & 7-Day Challenges
-- Legendary stakers-only badges
-- Badge reward expansion to 34
-
-### Phase 3 · Expansion (Q3 to Q4 2026)
-- New exercises (lunge, push-up, plank)
-- Group challenges & leaderboards
-- Premium tier with activity rewards
-- Strategic partnerships
-
-### Phase 4 · Vision (2027+)
-- Compressed badge migration · Metaplex Bubblegum
-- iOS & Google Play launch
-- AI coaching
-- Movement Layer SDK for Solana health dApps
+SolFit's production backend currently runs **sign-in only**. Running Locked In under SolFit needs its own program deployment, admin multisig, funded reward vault and server keys. The full design is in [`docs/LOCKED_IN.md`](docs/LOCKED_IN.md).
 
 ---
 
-## Open Source & Composability
+## 🗂 Data model
 
-SolFit is MIT licensed. Built to compose with other Solana primitives.
+```mermaid
+erDiagram
+    USER ||--o{ WORKOUT : "workouts/{auto}"
+    USER ||--o{ POINTS : "points_history/{id}"
+    USER ||--o{ BADGE : "badges/{id}"
+    USER ||--o{ GOAL : "goals/{daily|weekly|monthly}"
+    AUTHLINK ||--|| USER : "same wallet"
+    USER {
+        string wallet PK "base58 = Firebase uid"
+        int points "cache"
+        int totalSquats "cache"
+        int currentStreak
+        int bestStreak
+    }
+    WORKOUT {
+        string exercise
+        int reps
+        int elapsed
+        number createdAt
+    }
+    POINTS {
+        string reason
+        int amount
+    }
+    BADGE {
+        bool earned
+        string txSignature
+        string memo
+    }
+    AUTHLINK {
+        timestamp linkedAt
+        timestamp lastSignInAt
+    }
+```
 
-- **Today** · SKR staking verification, on-chain workout records, MWA integration
-- **Tomorrow** · Movement Layer SDK so other Solana dApps can read verified human movement
-
-Workout data lives on Solana. Public. Verifiable. Composable.
-
----
-
-## Solana Ecosystem Contribution
-
-- A new dApp category. The Movement Layer.
-- SKR token integration. Solana Mobile native.
-- All workouts on-chain. Public. Verifiable.
-- Microtransaction model for fitness rewards.
-- Mobile-first Solana adoption (Seeker).
-
----
-
-## Privacy & Legal
-
-- [Privacy Policy](https://solfit.digitiumlabs.com/privacy-policy.html)
-- [Terms of Service](https://solfit.digitiumlabs.com/terms.html)
-
-All pose detection runs on device. Camera frames are never uploaded. No video is recorded or saved.
-
----
-
-## The Build
-
-This app was built by a Physical Therapist with the help of AI (Claude). The gap between knowledge and creation closed. What mattered was having something worth building.
-
-Movement is the most honest thing a person can do. You cannot fake exercise. You cannot cheat a streak. The body does not lie.
-
-SolFit exists because the world is better when people move. When habits are formed. When effort is owned.
-
----
-
-## Builder
-
-**Jamielim** · Physical Therapist · Athletic Trainer
-
-A working clinician shipping on Solana Mobile.
-
-- **CLINICAL** · Daily PT and AT practice
-- **INSIGHT** · Sees patients struggle with movement habits every day
-- **FIT** · Built from clinical observation, not assumption
-- **SHIPPING** · Already live on the Solana Mobile dApp Store
-
-> "I treat people in pain every day. Most pain comes from not moving enough. But people cannot build the daily habit. So I built SolFit."
+Subcollections are the **source of truth**. On connect, the app re-derives the cached totals from them. All access is owner-only (`request.auth.uid == wallet`), apart from the public quest catalog.
 
 ---
 
-## Links
+## 🧰 Tech stack
 
-- [Website](https://solfit.digitiumlabs.com/)
-- [GitHub](https://github.com/Jamielimq/kinlog)
-- [X (Twitter)](https://x.com/CryptoJHLim)
+| Area | Technology |
+|---|---|
+| App | Expo SDK 54 (bare), React Native 0.81, TypeScript (strict), expo-router v6, React Compiler |
+| Vision | MediaPipe Tasks Vision 0.10.14 (pose_landmarker_lite), react-native-vision-camera 4 |
+| Solana | @solana/web3.js, @solana-mobile/mobile-wallet-adapter-protocol, SIWS |
+| On-chain | Anchor (SBPFv3), SPL Token, Squads v4, solana-verify |
+| Backend | Node 22 sign-in server on Render; Firebase Auth, Cloud Firestore (asia-south1); Cloud Functions v2 for Locked In |
+| Web | GitHub Pages: download page and Digital Asset Links |
+| Testing | node:test unit tests, Firebase emulator (rules, server, sign-in end to end), LiteSVM, Surfpool |
 
 ---
 
-## License
+## 🛠 Development
 
-MIT © 2026 Jamielim. See [LICENSE](LICENSE) for details.
+```bash
+npm install
+npm --prefix functions install
+
+npm run start                                   # Metro for the debug build
+npx tsc --noEmit                                # app typecheck
+npm --prefix functions run typecheck            # server typecheck
+npm --prefix functions test                     # unit tests
+firebase emulators:exec --only firestore,auth --project demo-solfit \
+  "npm --prefix functions run test:emulator"    # rules + server tests
+```
+
+**Android builds** need JDK 17 and the Android SDK (`compileSdk 36`, NDK 27.1):
+
+```bash
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+cd android && ./gradlew assembleDebug           # debug build, served by Metro
+scripts/release-android.sh                      # signed release: checks, build, verify, checksum
+```
+
+> ⚠️ Don't run `npx expo prebuild`, `npx expo run:android` or `./gradlew clean` in this repo. They can wipe gitignored native files. See [`CLAUDE.md`](CLAUDE.md).
+
+**Configuration**
+
+| Variable | Where | Purpose |
+|---|---|---|
+| `EXPO_PUBLIC_AUTH_URL` | app build | sign-in server URL; the release script sets it |
+| `EXPO_PUBLIC_HELIUS_API_KEY` | app build (optional) | faster RPC; falls back to the public endpoint |
+| `AUTH_NONCE_SECRET(_FILE)`, `GOOGLE_APPLICATION_CREDENTIALS` | sign-in server only | nonce HMAC key and service account; never in the app or git |
+
+Releases follow [`docs/RELEASING.md`](docs/RELEASING.md).
 
 ---
 
-**Movement has SolFit.** The Movement Layer.
+## 🔐 Privacy
+
+- The camera is processed **on the device**; frames are analysed and discarded, never recorded or uploaded.
+- SolFit stores your **public** wallet address, workouts, points, streaks and badges. Only your own signed-in session can read them.
+- SolFit never asks for your private key or recovery phrase, and signing in never costs SOL.
+
+[Privacy Policy](https://solfit.digitiumlabs.com/privacy-policy.html) · [Terms of Service](https://solfit.digitiumlabs.com/terms.html)
+
+---
+
+## ⚠️ Known limits
+
+- The sign-in server is on a free Render instance and sleeps when idle. The app wakes it at launch, but the first sign-in after a long idle can take up to a minute.
+- SolFit needs the network to sign in and sync, and is **Android only**.
+- Side-view capture only: stand side-on, with shoulder to ankle in frame.
+
+---
+
+## 🙏 Credits & license
+
+SolFit is based on **[Kinlog](https://github.com/Jamielimq/kinlog)** by **Jamielim** (Physical Therapist · Athletic Trainer), released under the MIT License. The clinical squat thresholds, the original pose pipeline and the Locked In design come from that work.
+
+MIT © 2026 Jamielim, with SolFit modifications. See [LICENSE](LICENSE).
+
+<div align="center">
+<br/>
+<img src="assets/images/solfit-logo.png" width="40" alt="" />
+<br/>
+<sub>Built on Solana · Powered by on-device AI · Rewards drawn from ORE rounds</sub>
+</div>
