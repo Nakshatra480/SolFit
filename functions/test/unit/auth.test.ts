@@ -29,10 +29,10 @@ test("nonce: issued nonces verify, expire and resist tampering", () => {
 
 test("SIWS text round-trips through parse (wallet-standard format)", () => {
   const f: SignInFields = {
-    domain: "solfit.app",
+    domain: "solfit.digitiumlabs.com",
     address: Keypair.generate().publicKey.toBase58(),
     statement: "Sign in to SolFit.",
-    uri: "https://solfit.app",
+    uri: "https://solfit.digitiumlabs.com",
     version: "1",
     chainId: "mainnet",
     nonce: "abc12345",
@@ -41,7 +41,7 @@ test("SIWS text round-trips through parse (wallet-standard format)", () => {
     resources: ["https://example.com/a", "https://example.com/b"],
   };
   const text = buildSignInMessage(f);
-  assert.ok(text.startsWith("solfit.app wants you to sign in with your Solana account:\n"));
+  assert.ok(text.startsWith("solfit.digitiumlabs.com wants you to sign in with your Solana account:\n"));
   assert.deepEqual(parseSignInMessage(text), f);
   const { statement: _s, resources: _r, ...bare } = f;
   assert.deepEqual(parseSignInMessage(buildSignInMessage(bare)), bare);

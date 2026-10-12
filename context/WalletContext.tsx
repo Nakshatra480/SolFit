@@ -54,7 +54,7 @@ const STORAGE_KEY = 'solfit.wallet.session';
 // that wallets check the identity against. The icon path is relative to it: /icon.png.
 const SOLFIT_IDENTITY = {
   name: 'SolFit',
-  uri: 'https://solfit.app',
+  uri: 'https://solfit.digitiumlabs.com',
   icon: 'icon.png',
 } as const;
 const CHAIN = 'solana:mainnet';

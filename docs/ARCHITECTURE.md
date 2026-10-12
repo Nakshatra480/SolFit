@@ -409,7 +409,7 @@ stale copy of access semantics in a document is worse than none.
 ### Catalog — `hooks/useBadges.ts:36-78`
 
 34 badges. `NFT_DEFAULTS` (`:29-34`) = `{ symbol: 'SOLFIT', uri: '', sellerFeeBasisPoints: 250, mintFeeSOL: 0.001 }`;
-each badge overrides `uri` to `https://solfit.app/nft/{id}.json`.
+each badge overrides `uri` to `https://solfit.digitiumlabs.com/nft/{id}.json`.
 
 | Category | Count | Ids | Award criterion |
 |---|---|---|---|

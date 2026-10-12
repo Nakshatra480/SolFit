@@ -5,7 +5,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-D97706.svg)](LICENSE)
 ![Solana dApp Store](https://img.shields.io/badge/Solana%20dApp%20Store-Live-14F195)
-[![Version](https://img.shields.io/badge/version-v1.3.3-2D2926)](https://github.com/Jamielimq/solfit/releases)
+[![Version](https://img.shields.io/badge/version-v1.3.3-2D2926)](https://github.com/Jamielimq/kinlog/releases)
 [![MONOLITH](https://img.shields.io/badge/MONOLITH-Honorable%20Mention-D97706)](https://blog.solanamobile.com)
 
 Built by a licensed Physical Therapist & Athletic Trainer.
@@ -139,7 +139,7 @@ For the first time, years of clinical knowledge became a single algorithm.
 | **SKR Staking** | Helius API (3-layer lookup) |
 | **Backend** | Firebase Firestore |
 | **Target Device** | Solana Seeker (Android) |
-| **Open Source** | github.com/Jamielimq/solfit · MIT |
+| **Open Source** | github.com/Jamielimq/kinlog · MIT |
 
 **Latency**: Sub-second pose inference
 **Fees**: ~0.001 SOL per badge issuance
@@ -271,8 +271,8 @@ Workout data lives on Solana. Public. Verifiable. Composable.
 
 ## Privacy & Legal
 
-- [Privacy Policy](https://solfit.app/privacy-policy.html)
-- [Terms of Service](https://solfit.app/terms.html)
+- [Privacy Policy](https://solfit.digitiumlabs.com/privacy-policy.html)
+- [Terms of Service](https://solfit.digitiumlabs.com/terms.html)
 
 All pose detection runs on device. Camera frames are never uploaded. No video is recorded or saved.
 
@@ -305,8 +305,8 @@ A working clinician shipping on Solana Mobile.
 
 ## Links
 
-- [Website](https://solfit.app/)
-- [GitHub](https://github.com/Jamielimq/solfit)
+- [Website](https://solfit.digitiumlabs.com/)
+- [GitHub](https://github.com/Jamielimq/kinlog)
 - [X (Twitter)](https://x.com/CryptoJHLim)
 
 ---
