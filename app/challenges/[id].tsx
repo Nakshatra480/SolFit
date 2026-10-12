@@ -1,0 +1,600 @@
+import { LinearGradient } from 'expo-linear-gradient'
+import { router, useLocalSearchParams } from 'expo-router'
+import { useMemo, useState } from 'react'
+import {
+  ActivityIndicator,
+  Dimensions,
+  Linking,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { RARITY_COLOR } from '../../constants/rarity'
+import { useWallet } from '../../context/WalletContext'
+import { localDateKey } from '../../hooks/challengeProgress'
+import { useChallenges } from '../../hooks/useChallenges'
+import { useClaimChallengeReward } from '../../hooks/useClaimChallengeReward'
+import { useGoals } from '../../hooks/useGoals'
+
+const C = {
+  bg: '#FAFAF9', bg2: '#F5F4F1', bg3: '#EDECEA',
+  card: '#FFFFFF', dark: '#2D2926', dark2: '#3A3532', dark3: '#57524E',
+  amber: '#D97706', amber2: '#F59E0B', amber3: '#FCD34D', amberBg: '#FFFBEB',
+  text: '#1C1917', sub: '#78716C', muted: '#A8A29E', line: '#E7E5E4',
+  red: '#EF4444', redBg: '#FEE2E2',
+  green: '#10B981',
+}
+
+type CellState = 'met' | 'today' | 'missed' | 'future'
+
+interface DayCell {
+  day: number
+  state: CellState
+  reps: number
+  key: string
+}
+
+function shortenSig(sig: string): string {
+  if (!sig || sig.length < 12) return sig
+  return `${sig.slice(0, 4)}...${sig.slice(-4)}`
+}
+
+function formatLongDate(ms: number): string {
+  return new Date(ms).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
+
+function startOfLocalDay(ms: number): number {
+  const d = new Date(ms)
+  d.setHours(0, 0, 0, 0)
+  return d.getTime()
+}
+
+export default function ChallengeDetailScreen() {
+  const params = useLocalSearchParams<{ id: string }>()
+  const id = typeof params.id === 'string' ? params.id : ''
+
+  const { publicKey, connecting, connect, dataAddress } = useWallet()
+  const address = dataAddress
+
+  const { challenges, loading } = useChallenges(address)
+  const { goals } = useGoals(address)
+  const { claimChallengeReward, isClaiming } = useClaimChallengeReward()
+
+  const [claimResult, setClaimResult] = useState<{ tx: string; points: number } | null>(null)
+  const [verifyExpanded, setVerifyExpanded] = useState(false)
+
+  const view = challenges.find(c => c.catalog.id === id)
+
+  // Day grid cells — derived from instance.progress.daysLog or empty.
+  const cells = useMemo<DayCell[]>(() => {
+    if (!view) return []
+    const { catalog, instance } = view
+    const out: DayCell[] = []
+
+    if (!instance) {
+      for (let i = 1; i <= catalog.requirementDays; i++) {
+        out.push({ day: i, state: 'future', reps: 0, key: '' })
+      }
+      return out
+    }
+
+    const todayKey = localDateKey(Date.now())
+    const todayStart = startOfLocalDay(Date.now())
+    const startDay = new Date(instance.startedAt)
+    startDay.setHours(0, 0, 0, 0)
+
+    for (let i = 0; i < catalog.requirementDays; i++) {
+      const day = new Date(startDay)
+      day.setDate(startDay.getDate() + i)
+      const key = localDateKey(day.getTime())
+      const log = instance.progress.daysLog?.[key]
+
+      let state: CellState
+      if (log?.met) state = 'met'
+      else if (key === todayKey) state = 'today'
+      else if (day.getTime() < todayStart) state = 'missed'
+      else state = 'future'
+
+      out.push({ day: i + 1, state, reps: log?.reps ?? 0, key })
+    }
+    return out
+  }, [view])
+
+  // ─── Loading / not found ───
+  if (loading && !view) {
+    return (
+      <SafeAreaView style={s.safe} edges={['top']}>
+        <Header onBack={() => router.back()} />
+        <View style={s.centerFill}>
+          <ActivityIndicator color={C.amber2} />
+          <Text style={s.loadingText}>Loading quest...</Text>
+        </View>
+      </SafeAreaView>
+    )
+  }
+
+  if (!view) {
+    return (
+      <SafeAreaView style={s.safe} edges={['top']}>
+        <Header onBack={() => router.back()} />
+        <View style={s.centerFill}>
+          <Text style={s.notFoundIcon}>🛡</Text>
+          <Text style={s.notFoundTitle}>Quest not found</Text>
+          <Text style={s.notFoundSub}>It may have been removed or the link is wrong.</Text>
+          <TouchableOpacity style={s.notFoundBtn} onPress={() => router.back()} activeOpacity={0.85}>
+            <Text style={s.notFoundBtnText}>Go Back</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    )
+  }
+
+  const { catalog, instance, effectiveStatus, progressPct, daysRemaining } = view
+  const status = effectiveStatus
+  const rarityColor = RARITY_COLOR[catalog.rarity] ?? C.sub
+
+  // Day grid layout — dynamic cell size for clean rows.
+  const screenW = Dimensions.get('window').width
+  const innerW = screenW - 40 // 20 padding × 2
+  const cellsPerRow = catalog.requirementDays <= 7 ? catalog.requirementDays : 7
+  const cellGap = 8
+  const cellSize = Math.floor((innerW - cellGap * (cellsPerRow - 1)) / cellsPerRow)
+
+  const statusLabel = !instance
+    ? 'NOT STARTED'
+    : status === 'active'
+    ? 'ACTIVE'
+    : status === 'completed'
+    ? 'READY TO CLAIM'
+    : status === 'failed'
+    ? 'FAILED'
+    : 'CLAIMED'
+
+  // Today's status (active only) — uses daily goal as the live counter.
+  const dailyGoal = goals.find(g => g.id === 'daily')
+  const todayReps = dailyGoal?.current ?? 0
+  const todayTarget = catalog.requirementDailyReps
+  const todayPct = Math.min(todayReps / todayTarget, 1)
+  const todayLog = instance?.progress.daysLog?.[localDateKey(Date.now())]
+  const todayMet = !!todayLog?.met
+
+  const handleClaim = async () => {
+    try {
+      const { txSignature, awardedPoints } = await claimChallengeReward(view)
+      setClaimResult({ tx: txSignature, points: awardedPoints })
+    } catch {
+      // Hook surfaces the error.
+    }
+  }
+
+  const openSolscan = (sig: string) => {
+    Linking.openURL(`https://solscan.io/tx/${sig}`)
+  }
+
+  // ─── Bottom action ───
+  // This version starts no new quests: a run that isn't going or waiting for its claim (not started,
+  // failed, claimed) has no action here.
+  let bottom: { label: string; onPress: () => void; primary: boolean; disabled?: boolean } | null = null
+  if (!publicKey) {
+    bottom = { label: connecting ? 'Connecting...' : 'Connect Wallet', onPress: connect, primary: true, disabled: connecting }
+  } else if (status === 'active') {
+    bottom = { label: 'Go to Workout →', onPress: () => router.push('/workout'), primary: true }
+  } else if (status === 'completed') {
+    bottom = { label: isClaiming ? 'Claiming...' : 'Claim Reward →', onPress: handleClaim, primary: true, disabled: isClaiming }
+  }
+
+  return (
+    <SafeAreaView style={s.safe} edges={['top']}>
+      <ScrollView
+        style={s.scroll}
+        contentContainerStyle={s.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <Header onBack={() => router.back()} />
+
+        {/* Hero card with gradient */}
+        <LinearGradient
+          colors={[catalog.nft.gradientFrom, catalog.nft.gradientTo] as [string, string]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={s.hero}
+        >
+          <View style={s.heroTopRow}>
+            <View style={s.heroBadge}>
+              <Text style={s.heroBadgeText}>🛡  {catalog.nft.romanNumeral}</Text>
+            </View>
+            <View style={[s.rarityPill, { borderColor: rarityColor }]}>
+              <View style={[s.rarityDot, { backgroundColor: rarityColor }]} />
+              <Text style={[s.rarityText, { color: '#fff' }]}>{catalog.rarity.toUpperCase()}</Text>
+            </View>
+          </View>
+          <Text style={s.heroName}>{catalog.name}</Text>
+          <Text style={s.heroTagline}>{catalog.tagline}</Text>
+          <View style={s.statusPill}>
+            <Text style={s.statusPillText}>{statusLabel}</Text>
+            {instance && (status === 'active' || status === 'completed' || status === 'failed') && (
+              <Text style={s.statusPillSub}>
+                {' · '}{Math.round(progressPct * 100)}%
+              </Text>
+            )}
+          </View>
+        </LinearGradient>
+
+        {/* Requirements */}
+        <View style={s.section}>
+          <Text style={s.sectionTitle}>Requirements</Text>
+          <View style={s.sectionCard}>
+            <View style={s.reqRow}>
+              <Text style={s.reqDot}>•</Text>
+              <Text style={s.reqText}>
+                <Text style={s.reqStrong}>{catalog.requirementDays} days</Text> · {catalog.requirementDailyReps} squats per day
+              </Text>
+            </View>
+            <View style={s.reqRow}>
+              <Text style={s.reqDot}>•</Text>
+              <Text style={s.reqText}>
+                Reward: <Text style={s.reqAmber}>+{catalog.bonusPoints.toLocaleString()} points</Text>
+              </Text>
+            </View>
+            <View style={[s.reqRow, s.reqRowLast]}>
+              <Text style={s.reqDot}>•</Text>
+              <Text style={s.reqText}>
+                Reward fee: {(catalog.mintFeeLamports / 1_000_000_000).toFixed(3)} SOL (charged on claim)
+              </Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Description */}
+        {catalog.description ? (
+          <View style={s.section}>
+            <Text style={s.sectionTitle}>Description</Text>
+            <View style={s.sectionCard}>
+              <Text style={s.desc}>{catalog.description}</Text>
+            </View>
+          </View>
+        ) : null}
+
+        {/* Daily Progress grid (active / completed / failed) */}
+        {instance && instance.status !== 'claimed' && (
+          <View style={s.section}>
+            <Text style={s.sectionTitle}>Daily Progress</Text>
+            <View style={[s.daysGrid, { gap: cellGap }]}>
+              {cells.map(cell => (
+                <DayCellView key={cell.day} cell={cell} size={cellSize} />
+              ))}
+            </View>
+            <View style={s.legend}>
+              <LegendItem color={C.amber2} label="Done" />
+              <LegendItem color={C.amberBg} borderColor={C.amber2} label="Today" />
+              <LegendItem color={C.redBg} borderColor={C.red} label="Missed" />
+              <LegendItem color={C.bg2} label="Future" />
+            </View>
+          </View>
+        )}
+
+        {/* Today's Status (active only) */}
+        {status === 'active' && (
+          <View style={s.section}>
+            <Text style={s.sectionTitle}>Today's Status</Text>
+            <View style={s.todayCard}>
+              <View style={s.todayTopRow}>
+                <Text style={s.todayLabel}>TODAY</Text>
+                <Text style={s.todayCount}>
+                  <Text style={s.todayCountNum}>{todayReps}</Text>
+                  <Text style={s.todayCountTarget}> / {todayTarget}</Text>
+                </Text>
+              </View>
+              <View style={s.progressBar}>
+                <View style={[s.progressFill, { width: `${todayPct * 100}%` }]} />
+              </View>
+              <Text style={s.todayNote}>
+                {todayMet
+                  ? '🎉 Daily target done!'
+                  : `${Math.max(0, todayTarget - todayReps)} more squats to meet today`}
+              </Text>
+            </View>
+            {daysRemaining !== null && daysRemaining > 0 && (
+              <Text style={s.daysLeftHint}>
+                {daysRemaining} day{daysRemaining > 1 ? 's' : ''} of consistency to go
+              </Text>
+            )}
+          </View>
+        )}
+
+        {/* Verified on Solana (expandable) */}
+        {instance && (
+          <View style={s.section}>
+            <TouchableOpacity
+              style={s.verifiedBadge}
+              onPress={() => setVerifyExpanded(v => !v)}
+              activeOpacity={0.85}
+            >
+              <Text style={s.verifiedCheck}>✓</Text>
+              <Text style={s.verifiedText}>Verified on Solana</Text>
+              <Text style={s.verifiedChevron}>{verifyExpanded ? '▲' : '▼'}</Text>
+            </TouchableOpacity>
+            {verifyExpanded && (
+              <View style={s.verifiedDetails}>
+                <AuditRow label="Started" value={formatLongDate(instance.startedAt)} />
+                <AuditRow
+                  label="Transaction"
+                  value={shortenSig(instance.startTxSignature)}
+                  onPress={() => openSolscan(instance.startTxSignature)}
+                />
+                {instance.claimedAt ? (
+                  <>
+                    <AuditRow label="Claimed" value={formatLongDate(instance.claimedAt)} />
+                    {instance.claimTxSignature ? (
+                      <AuditRow
+                        label="Claim Tx"
+                        value={shortenSig(instance.claimTxSignature)}
+                        onPress={() => openSolscan(instance.claimTxSignature!)}
+                      />
+                    ) : null}
+                  </>
+                ) : null}
+                <Text style={s.verifiedFooter}>Recorded immutably on-chain</Text>
+              </View>
+            )}
+          </View>
+        )}
+
+        {/* Bottom action / today-done state badge */}
+        {status === 'active' && todayMet ? (
+          <View style={s.todayDoneBadge}>
+            <Text style={s.todayDoneCheck}>✓</Text>
+            <Text style={s.todayDoneText}>Today&apos;s goal done</Text>
+          </View>
+        ) : bottom ? (
+          <TouchableOpacity
+            style={[
+              bottom.primary ? s.actionPrimary : s.actionGhost,
+              bottom.disabled && (bottom.primary ? s.actionPrimaryDisabled : s.actionGhostDisabled),
+            ]}
+            onPress={bottom.onPress}
+            disabled={bottom.disabled}
+            activeOpacity={0.85}
+          >
+            <Text style={[
+              bottom.primary ? s.actionPrimaryText : s.actionGhostText,
+              bottom.disabled && s.actionDisabledText,
+            ]}>
+              {bottom.label}
+            </Text>
+          </TouchableOpacity>
+        ) : null}
+      </ScrollView>
+
+      {/* Claim success modal */}
+      <Modal visible={!!claimResult} transparent animationType="fade">
+        <View style={s.modalOverlay}>
+          <View style={s.modalBox}>
+            <Text style={s.modalIcon}>🎉</Text>
+            <Text style={s.modalTitle}>Reward Claimed!</Text>
+            <Text style={s.modalPoints}>+{claimResult?.points.toLocaleString()} points</Text>
+            <Text style={s.modalQuestName}>{catalog.name}</Text>
+            {claimResult?.tx ? (
+              <View style={s.modalTxBox}>
+                <Text style={s.modalTxLabel}>TX</Text>
+                <Text style={s.modalTxValue}>{shortenSig(claimResult.tx)}</Text>
+              </View>
+            ) : null}
+            <TouchableOpacity
+              style={s.modalSolscan}
+              onPress={() => claimResult && openSolscan(claimResult.tx)}
+              activeOpacity={0.85}
+            >
+              <Text style={s.modalSolscanText}>View on Solscan</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={s.modalDone}
+              onPress={() => setClaimResult(null)}
+              activeOpacity={0.85}
+            >
+              <Text style={s.modalDoneText}>Done</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </SafeAreaView>
+  )
+}
+
+// ─────────── Subcomponents ───────────
+
+function Header({ onBack }: { onBack: () => void }) {
+  return (
+    <View style={s.header}>
+      <TouchableOpacity onPress={onBack} style={s.backBtn} activeOpacity={0.7}>
+        <Text style={s.backArrow}>←</Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+function DayCellView({ cell, size }: { cell: DayCell; size: number }) {
+  let bg = C.bg2
+  let borderColor = 'transparent'
+  let borderWidth = 0
+  let numColor = C.muted
+  let mark = ''
+  let markColor = '#fff'
+
+  if (cell.state === 'met') {
+    bg = C.amber2; numColor = '#fff'; mark = '✓'
+  } else if (cell.state === 'today') {
+    bg = C.amberBg; borderColor = C.amber2; borderWidth = 2; numColor = C.amber
+  } else if (cell.state === 'missed') {
+    bg = C.redBg; borderColor = C.red; borderWidth = 1.5; numColor = C.red; mark = '✗'; markColor = C.red
+  }
+
+  return (
+    <View style={[
+      s.dayCell,
+      { width: size, height: size + 4, backgroundColor: bg, borderColor, borderWidth },
+    ]}>
+      <Text style={[s.dayNum, { color: numColor }]}>{cell.day}</Text>
+      {mark ? <Text style={[s.dayMark, { color: markColor }]}>{mark}</Text> : null}
+    </View>
+  )
+}
+
+function LegendItem({ color, borderColor, label }: { color: string; borderColor?: string; label: string }) {
+  return (
+    <View style={s.legendItem}>
+      <View
+        style={[
+          s.legendSwatch,
+          { backgroundColor: color },
+          borderColor ? { borderWidth: 1.5, borderColor } : null,
+        ]}
+      />
+      <Text style={s.legendText}>{label}</Text>
+    </View>
+  )
+}
+
+function AuditRow({
+  label,
+  value,
+  onPress,
+}: {
+  label: string
+  value: string
+  onPress?: () => void
+}) {
+  const Wrap: any = onPress ? TouchableOpacity : View
+  return (
+    <Wrap style={s.auditRow} onPress={onPress} activeOpacity={0.7}>
+      <Text style={s.auditLabel}>{label}</Text>
+      <Text style={[s.auditValue, onPress && s.auditLink]} numberOfLines={1}>
+        {value}{onPress ? '  ↗' : ''}
+      </Text>
+    </Wrap>
+  )
+}
+
+const s = StyleSheet.create({
+  safe:          { flex: 1, backgroundColor: C.bg },
+  scroll:        { flex: 1, paddingHorizontal: 20 },
+  scrollContent: { paddingBottom: 32 },
+
+  header:    { flexDirection: 'row', alignItems: 'center', paddingVertical: 12 },
+  backBtn:   { width: 36, height: 36, borderRadius: 12, backgroundColor: C.card, borderWidth: 1.5, borderColor: C.line, alignItems: 'center', justifyContent: 'center' },
+  backArrow: { fontSize: 18, color: C.text, fontWeight: '700' },
+
+  centerFill: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 20, gap: 12 },
+  loadingText: { fontSize: 12, color: C.muted },
+
+  notFoundIcon:    { fontSize: 38, marginBottom: 4 },
+  notFoundTitle:   { fontSize: 18, fontWeight: '800', color: C.text },
+  notFoundSub:     { fontSize: 13, color: C.sub, textAlign: 'center', marginBottom: 12 },
+  notFoundBtn:     { backgroundColor: C.dark, borderRadius: 12, paddingVertical: 12, paddingHorizontal: 24 },
+  notFoundBtnText: { color: '#fff', fontSize: 14, fontWeight: '800' },
+
+  // Hero
+  hero:           { borderRadius: 24, padding: 22, marginBottom: 20, minHeight: 180, justifyContent: 'space-between', shadowColor: '#000', shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.18, shadowRadius: 14, elevation: 6 },
+  heroTopRow:     { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14 },
+  heroBadge:      { backgroundColor: 'rgba(0,0,0,0.4)', borderRadius: 100, paddingHorizontal: 12, paddingVertical: 5 },
+  heroBadgeText:  { fontSize: 12, color: '#fff', fontWeight: '800', letterSpacing: 0.5 },
+  rarityPill:     { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: 'rgba(0,0,0,0.4)', borderRadius: 100, paddingHorizontal: 10, paddingVertical: 5, borderWidth: 1.5 },
+  rarityDot:      { width: 6, height: 6, borderRadius: 3 },
+  rarityText:     { fontSize: 9, fontWeight: '900', letterSpacing: 1.2 },
+  heroName:       { fontSize: 28, fontWeight: '900', color: '#fff', letterSpacing: -0.6, marginBottom: 4, textShadowColor: 'rgba(0,0,0,0.3)', textShadowOffset: { width: 0, height: 1 }, textShadowRadius: 3 },
+  heroTagline:    { fontSize: 13, color: 'rgba(255,255,255,0.85)', marginBottom: 16 },
+  statusPill:     { alignSelf: 'flex-start', flexDirection: 'row', backgroundColor: 'rgba(0,0,0,0.45)', borderRadius: 100, paddingHorizontal: 12, paddingVertical: 6 },
+  statusPillText: { fontSize: 10, color: '#fff', fontWeight: '900', letterSpacing: 1.5 },
+  statusPillSub:  { fontSize: 10, color: 'rgba(255,255,255,0.85)', fontWeight: '700' },
+
+  // Section
+  section:      { marginBottom: 22 },
+  sectionTitle: { fontSize: 11, color: C.sub, fontWeight: '800', letterSpacing: 1.2, marginBottom: 10, textTransform: 'uppercase' },
+
+  // Requirements
+  reqRow:     { flexDirection: 'row', gap: 8, marginBottom: 6 },
+  reqRowLast: { marginBottom: 0 },
+  reqDot:     { fontSize: 13, color: C.muted, lineHeight: 18 },
+  reqText:    { fontSize: 13, color: C.sub, flex: 1, lineHeight: 18 },
+  reqStrong:  { color: C.text, fontWeight: '700' },
+  reqAmber:   { color: C.amber, fontWeight: '700' },
+
+  // Description
+  desc: { fontSize: 13, color: C.sub, lineHeight: 20 },
+
+  // Generic section card (Requirements / Description wrapper)
+  sectionCard: { backgroundColor: C.card, borderRadius: 16, borderWidth: 0.5, borderColor: C.line, paddingVertical: 14, paddingHorizontal: 16 },
+
+  // Days grid
+  daysGrid:     { flexDirection: 'row', flexWrap: 'wrap', marginBottom: 12 },
+  dayCell:      { borderRadius: 10, alignItems: 'center', justifyContent: 'center', paddingVertical: 6 },
+  dayNum:       { fontSize: 11, fontWeight: '800' },
+  dayMark:      { fontSize: 13, fontWeight: '900', marginTop: 2 },
+  legend:       { flexDirection: 'row', flexWrap: 'wrap', gap: 12, marginTop: 4 },
+  legendItem:   { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  legendSwatch: { width: 12, height: 12, borderRadius: 4 },
+  legendText:   { fontSize: 10, color: C.muted, fontWeight: '600' },
+
+  // Today's status
+  todayCard:        { backgroundColor: C.card, borderRadius: 16, borderWidth: 1.5, borderColor: C.line, padding: 16 },
+  todayTopRow:      { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
+  todayLabel:       { fontSize: 9, color: C.sub, letterSpacing: 1.2, fontWeight: '800' },
+  todayCount:       { fontSize: 18 },
+  todayCountNum:    { fontSize: 22, fontWeight: '900', color: C.text },
+  todayCountTarget: { fontSize: 14, color: C.muted, fontWeight: '700' },
+  progressBar:      { height: 6, backgroundColor: C.bg3, borderRadius: 100, marginBottom: 10, overflow: 'hidden' },
+  progressFill:     { height: 6, backgroundColor: C.amber2, borderRadius: 100 },
+  todayNote:        { fontSize: 11, color: C.sub },
+  daysLeftHint:     { fontSize: 11, color: C.muted, marginTop: 8, textAlign: 'center' },
+
+  // Verified on Solana badge
+  verifiedBadge:    { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', backgroundColor: C.dark, borderRadius: 100, paddingHorizontal: 12, paddingVertical: 7, gap: 8 },
+  verifiedCheck:    { fontSize: 13, color: C.green, fontWeight: '900' },
+  verifiedText:     { fontSize: 12, color: '#fff', fontWeight: '700' },
+  verifiedChevron:  { fontSize: 9, color: 'rgba(255,255,255,0.6)', marginLeft: 2 },
+  verifiedDetails:  { marginTop: 12, backgroundColor: C.card, borderRadius: 16, borderWidth: 1.5, borderColor: C.line, paddingHorizontal: 14, paddingVertical: 4 },
+  verifiedFooter:   { fontSize: 10, color: C.muted, textAlign: 'center', paddingVertical: 12, fontStyle: 'italic' },
+
+  // Audit row (used inside verifiedDetails)
+  auditRow:   { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 11, borderBottomWidth: 1, borderBottomColor: C.line },
+  auditLabel: { fontSize: 11, color: C.sub, fontWeight: '700', letterSpacing: 0.5, textTransform: 'uppercase' },
+  auditValue: { fontSize: 12, color: C.text, fontWeight: '600', flexShrink: 1, marginLeft: 12, textAlign: 'right' },
+  auditLink:  { color: C.amber },
+
+  // Today's-goal-done state badge (replaces bottom action while goal is met)
+  todayDoneBadge: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: 'rgba(217,119,6,0.10)', borderWidth: 1.5, borderColor: 'rgba(217,119,6,0.30)', borderRadius: 14, paddingVertical: 16, marginTop: 8 },
+  todayDoneCheck: { fontSize: 16, color: C.amber, fontWeight: '900' },
+  todayDoneText:  { fontSize: 15, color: C.amber, fontWeight: '800', letterSpacing: 0.3 },
+
+  // Bottom action
+  actionPrimary:         { backgroundColor: C.amber2, borderRadius: 14, paddingVertical: 16, alignItems: 'center', marginTop: 8, shadowColor: C.amber, shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.3, shadowRadius: 14, elevation: 6 },
+  actionPrimaryDisabled: { backgroundColor: C.bg3, shadowOpacity: 0 },
+  actionPrimaryText:     { color: C.dark, fontSize: 15, fontWeight: '900', letterSpacing: 0.3 },
+  actionGhost:           { backgroundColor: C.bg2, borderRadius: 14, paddingVertical: 16, alignItems: 'center', marginTop: 8, borderWidth: 1.5, borderColor: C.line },
+  actionGhostDisabled:   { opacity: 0.6 },
+  actionGhostText:       { color: C.sub, fontSize: 14, fontWeight: '700' },
+  actionDisabledText:    { color: C.muted },
+
+  // Modal
+  modalOverlay:     { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 32 },
+  modalBox:         { backgroundColor: C.card, borderRadius: 24, padding: 28, alignItems: 'center', width: '100%', shadowColor: '#000', shadowOffset: { width: 0, height: 12 }, shadowOpacity: 0.25, shadowRadius: 24, elevation: 12 },
+  modalIcon:        { fontSize: 48, marginBottom: 4 },
+  modalTitle:       { fontSize: 20, fontWeight: '900', color: C.text, marginBottom: 6 },
+  modalPoints:      { fontSize: 28, fontWeight: '900', color: C.amber, marginBottom: 4 },
+  modalQuestName:   { fontSize: 13, color: C.sub, marginBottom: 18 },
+  modalTxBox:       { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: C.bg2, borderRadius: 100, paddingHorizontal: 12, paddingVertical: 6, marginBottom: 18 },
+  modalTxLabel:     { fontSize: 9, color: C.sub, fontWeight: '800', letterSpacing: 1 },
+  modalTxValue:     { fontSize: 11, color: C.dark, fontWeight: '700' },
+  modalSolscan:     { width: '100%', backgroundColor: C.dark, borderRadius: 12, paddingVertical: 14, alignItems: 'center', marginBottom: 8 },
+  modalSolscanText: { color: '#fff', fontSize: 14, fontWeight: '800' },
+  modalDone:        { width: '100%', backgroundColor: C.bg2, borderRadius: 12, paddingVertical: 14, alignItems: 'center' },
+  modalDoneText:    { color: C.text, fontSize: 14, fontWeight: '700' },
+})

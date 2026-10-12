@@ -1,0 +1,2 @@
+- [Privacy Policy](https://solfit.app/privacy-policy.html)
+- [Terms of Service](https://solfit.app/terms.html)
