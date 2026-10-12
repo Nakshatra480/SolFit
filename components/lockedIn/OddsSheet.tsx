@@ -1,9 +1,8 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { BottomSheet } from '../BottomSheet'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  dark: '#2D2926', amber: '#D97706', text: '#1C1917', sub: '#78716C', line: '#E7E5E4',
-}
+const C = NM_COLORS
 
 // The only place in the app that shows odds (docs/LOCKED_IN.md, sections 2 and 8). Each "1 in N"
 // sits on its own line under the sentence.

@@ -1,11 +1,8 @@
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useWallet } from '../context/WalletContext'
+import { NM_COLORS } from '../constants/naturalMotion'
 
-const C = {
-  card: '#FFFFFF', dark: '#2D2926',
-  amber: '#D97706', amberBg: '#FFFBEB',
-  text: '#1C1917', sub: '#78716C', red: '#B91C1C',
-}
+const C = NM_COLORS
 
 // Shown once connecting has finished and the wallet still has no Firebase session (an update
 // from 1.3.3, a reinstall, or a sign-in that failed). Its data stays out of reach until it signs in.

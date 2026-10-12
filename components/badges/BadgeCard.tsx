@@ -3,13 +3,9 @@ import { RARITY_COLOR } from '../../constants/rarity'
 import type { BadgeCard as Card } from '../../lib/badgeCards'
 import { NBSP } from '../../lib/lockedIn/time'
 import { MonthlyMedal } from '../record/MonthlyMedal'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  bg2: '#F5F4F1', bg3: '#EDECEA',
-  card: '#FFFFFF', dark: '#2D2926',
-  amber: '#D97706', amber2: '#F59E0B', amberBg: '#FFFBEB',
-  text: '#1C1917', muted: '#A8A29E', line: '#E7E5E4',
-}
+const C = NM_COLORS
 
 // A wrapped name or description never leaves one word alone on its last line: the last two words
 // stay together, when there is another place to break. Only how it's drawn; the text itself is
@@ -107,10 +103,10 @@ export function BadgeCard({ card, busy, disabled, onClaim }: {
 
 const s = StyleSheet.create({
   card:       { width: '47.5%', backgroundColor: C.card, borderRadius: 22, padding: 16, alignItems: 'center', borderWidth: 1.5, borderColor: C.line, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.05, shadowRadius: 8, elevation: 2 },
-  cardLocked: { backgroundColor: C.bg2, borderColor: C.bg3, opacity: 0.65 },
+  cardLocked: { backgroundColor: C.card, borderColor: C.line },
   rarity:     { fontSize: 8, fontWeight: '800', letterSpacing: 0.8, alignSelf: 'flex-end', marginBottom: 8 },
   emoji:       { width: 60, height: 60, borderRadius: 30, backgroundColor: C.amberBg, borderWidth: 1.5, borderColor: `${C.amber}33`, alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
-  emojiLocked: { backgroundColor: C.bg3, borderColor: C.bg3 },
+  emojiLocked: { backgroundColor: C.bg2, borderColor: C.line },
   // The same box as the emoji's, so monthly cards line up with the rest.
   medal:         { width: 60, height: 60, alignItems: 'center', justifyContent: 'center', marginBottom: 10 },
   countPill:     { position: 'absolute', top: -6, right: -6, backgroundColor: C.dark, borderRadius: 100, paddingHorizontal: 6, paddingVertical: 2, minWidth: 22, alignItems: 'center', borderWidth: 2, borderColor: C.card },
@@ -122,8 +118,8 @@ const s = StyleSheet.create({
   foot:          { marginTop: 'auto', alignItems: 'center' },
   earnedTag:     { backgroundColor: C.amberBg, borderWidth: 1, borderColor: `${C.amber}33`, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 100, marginBottom: 8 },
   earnedTagText: { fontSize: 10, fontWeight: '700', color: C.amber },
-  lockedTag:     { backgroundColor: C.bg3, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 100 },
-  lockedTagText: { fontSize: 10, color: C.muted },
+  lockedTag:     { backgroundColor: C.bg2, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 100 },
+  lockedTagText: { fontSize: 10, color: C.sub, fontWeight: '600' },
   hidden:        { opacity: 0 },
   claimBtn:     { marginTop: 8, backgroundColor: C.dark, paddingHorizontal: 12, paddingVertical: 6, borderRadius: 100 },
   claimBtnBusy: { backgroundColor: C.muted },

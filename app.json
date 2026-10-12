@@ -17,8 +17,9 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#F2EADB",
-        "foregroundImage": "./assets/images/android-icon-foreground.png"
+        "backgroundColor": "#F4F3EC",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -36,9 +37,9 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 250,
+          "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#F2EADB"
+          "backgroundColor": "#F4F3EC"
         }
       ],
       "@react-native-firebase/app",

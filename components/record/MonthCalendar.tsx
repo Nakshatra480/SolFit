@@ -1,12 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { DAILY_GOAL, type DateKey, type MonthKey, monthCells, monthLabel } from '../../lib/record'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  card: '#FFFFFF', bg2: '#F5F4F1',
-  // amberTint: the app's amberBg (#FFFBEB) disappears on a white card.
-  amber: '#D97706', amber2: '#F59E0B', amberTint: '#FEF3C7',
-  text: '#1C1917', sub: '#78716C', muted: '#A8A29E', faint: '#D6D3D1', line: '#E7E5E4',
-}
+const C = NM_COLORS
 
 const WEEKDAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 

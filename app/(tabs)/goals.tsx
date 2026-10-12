@@ -18,12 +18,9 @@ import {
   monthsBetween,
   streakStats,
 } from '../../lib/record'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  bg: '#FAFAF9',
-  amber: '#D97706', amberBg: '#FFFBEB',
-  text: '#1C1917', sub: '#78716C', muted: '#A8A29E',
-}
+const C = NM_COLORS
 
 /**
  * The record: a month calendar and that month's badges with the current streak, all counted from the
@@ -74,7 +71,8 @@ export default function GoalsScreen() {
       <ScrollView style={s.scroll} contentContainerStyle={s.content} showsVerticalScrollIndicator={false}>
         <View style={s.header}>
           <Text style={s.headerSub}>Tracking</Text>
-          <Text style={s.headerTitle}>Goal Tracker</Text>
+          <Text style={s.headerTitle}>Goals</Text>
+          <Text style={s.headerDesc}>Your workout days this month and the monthly badges they earn.</Text>
         </View>
 
         {!publicKey && (
@@ -109,8 +107,9 @@ const s = StyleSheet.create({
   content: { paddingBottom: 8 },
 
   header:      { paddingTop: 16, paddingBottom: 16 },
-  headerSub:   { fontSize: 10, color: C.muted, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 4 },
-  headerTitle: { fontSize: 22, fontWeight: '800', color: C.text },
+  headerSub:   { fontSize: 11, color: C.amber, fontWeight: '700', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 4 },
+  headerTitle: { fontSize: 26, fontWeight: '800', color: C.text, letterSpacing: -0.6 },
+  headerDesc:  { fontSize: 13, color: C.sub, marginTop: 4, lineHeight: 19 },
 
   noWallet:     { backgroundColor: C.amberBg, borderRadius: 14, padding: 16, marginBottom: 16, alignItems: 'center' },
   noWalletText: { fontSize: 13, color: C.amber, fontWeight: '600' },

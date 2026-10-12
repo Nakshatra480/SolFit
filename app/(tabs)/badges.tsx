@@ -10,14 +10,9 @@ import { useClaims } from '../../context/ClaimsContext'
 import { useWallet } from '../../context/WalletContext'
 import { useSkrStaking } from '../../hooks/useSkrStaking'
 import { type CardCategory, cardCounts, sortCards } from '../../lib/badgeCards'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  bg: '#FAFAF9', bg2: '#F5F4F1', bg3: '#EDECEA',
-  card: '#FFFFFF', dark: '#2D2926', dark2: '#3A3532',
-  amber: '#D97706', amber2: '#F59E0B', amber3: '#FCD34D', amberBg: '#FFFBEB',
-  text: '#1C1917', sub: '#78716C', muted: '#A8A29E', line: '#E7E5E4',
-  red: '#EF4444',
-}
+const C = NM_COLORS
 
 // The category chips after All, in this order.
 const CHIPS: { key: CardCategory; label: string }[] = [
@@ -130,7 +125,7 @@ export default function BadgesScreen() {
 
         {/* Wallet card */}
         <TouchableOpacity style={s.walletCard} onPress={publicKey ? () => setShowDisconnect(true) : connect} activeOpacity={0.8}>
-          <View style={[s.walletIndicator, { backgroundColor: publicKey ? C.amber2 : C.red }]}/>
+          <View style={[s.walletIndicator, { backgroundColor: publicKey ? C.amber3 : C.red }]}/>
           <View style={{ flex: 1 }}>
             <Text style={s.walletTitle}>{publicKey ? 'Solana Wallet Connected' : 'Wallet Not Connected'}</Text>
             <Text style={s.walletAddr}>{shortAddress ?? 'Connect to claim achievement points'}</Text>
@@ -202,12 +197,12 @@ const s = StyleSheet.create({
   scroll: { flex: 1, paddingHorizontal: 20 },
 
   header:              { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, paddingBottom: 10 },
-  headerSub:           { fontSize: 10, color: C.muted, letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 4 },
-  headerTitle:         { fontSize: 22, fontWeight: '800', color: C.text },
+  headerSub:           { fontSize: 11, color: C.amber, fontWeight: '700', letterSpacing: 1.5, textTransform: 'uppercase', marginBottom: 4 },
+  headerTitle:         { fontSize: 26, fontWeight: '800', color: C.text, letterSpacing: -0.6 },
   walletBtn:           { backgroundColor: C.dark, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 100 },
   walletBtnText:       { color: '#fff', fontSize: 12, fontWeight: '700' },
   walletConnected:     { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: C.dark, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 100 },
-  walletDot:           { width: 7, height: 7, borderRadius: 4, backgroundColor: C.amber2 },
+  walletDot:           { width: 7, height: 7, borderRadius: 4, backgroundColor: C.amber3 },
   walletConnectedText: { color: '#fff', fontSize: 12, fontWeight: '700' },
 
   statsRow:    { flexDirection: 'row', backgroundColor: C.card, borderRadius: 18, padding: 16, marginBottom: 14, borderWidth: 1.5, borderColor: C.line, alignItems: 'flex-start' },
@@ -221,8 +216,8 @@ const s = StyleSheet.create({
   walletIndicator: { width: 10, height: 10, borderRadius: 5 },
   walletTitle:     { fontSize: 13, fontWeight: '600', color: '#fff' },
   walletAddr:      { fontSize: 11, color: 'rgba(255,255,255,0.4)', marginTop: 2 },
-  walletBadge:     { backgroundColor: `${C.amber}22`, borderWidth: 1, borderColor: `${C.amber}44`, paddingHorizontal: 12, paddingVertical: 4, borderRadius: 100 },
-  walletBadgeText: { fontSize: 11, fontWeight: '700', color: C.amber2 },
+  walletBadge:     { backgroundColor: `${C.amber3}22`, borderWidth: 1, borderColor: `${C.amber3}55`, paddingHorizontal: 12, paddingVertical: 4, borderRadius: 100 },
+  walletBadgeText: { fontSize: 11, fontWeight: '700', color: C.amber3 },
 
   tabScroll:  { marginBottom: 16 },
   tabRow:     { flexDirection: 'row', gap: 8, paddingRight: 20 },

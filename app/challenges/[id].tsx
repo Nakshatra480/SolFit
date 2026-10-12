@@ -19,15 +19,9 @@ import { localDateKey } from '../../hooks/challengeProgress'
 import { useChallenges } from '../../hooks/useChallenges'
 import { useClaimChallengeReward } from '../../hooks/useClaimChallengeReward'
 import { useGoals } from '../../hooks/useGoals'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  bg: '#FAFAF9', bg2: '#F5F4F1', bg3: '#EDECEA',
-  card: '#FFFFFF', dark: '#2D2926', dark2: '#3A3532', dark3: '#57524E',
-  amber: '#D97706', amber2: '#F59E0B', amber3: '#FCD34D', amberBg: '#FFFBEB',
-  text: '#1C1917', sub: '#78716C', muted: '#A8A29E', line: '#E7E5E4',
-  red: '#EF4444', redBg: '#FEE2E2',
-  green: '#10B981',
-}
+const C = NM_COLORS
 
 type CellState = 'met' | 'today' | 'missed' | 'future'
 
@@ -577,7 +571,7 @@ const s = StyleSheet.create({
   // Bottom action
   actionPrimary:         { backgroundColor: C.amber2, borderRadius: 14, paddingVertical: 16, alignItems: 'center', marginTop: 8, shadowColor: C.amber, shadowOffset: { width: 0, height: 6 }, shadowOpacity: 0.3, shadowRadius: 14, elevation: 6 },
   actionPrimaryDisabled: { backgroundColor: C.bg3, shadowOpacity: 0 },
-  actionPrimaryText:     { color: C.dark, fontSize: 15, fontWeight: '900', letterSpacing: 0.3 },
+  actionPrimaryText:     { color: '#fff', fontSize: 15, fontWeight: '900', letterSpacing: 0.3 },
   actionGhost:           { backgroundColor: C.bg2, borderRadius: 14, paddingVertical: 16, alignItems: 'center', marginTop: 8, borderWidth: 1.5, borderColor: C.line },
   actionGhostDisabled:   { opacity: 0.6 },
   actionGhostText:       { color: C.sub, fontSize: 14, fontWeight: '700' },

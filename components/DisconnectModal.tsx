@@ -1,4 +1,5 @@
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { NM } from '../constants/naturalMotion';
 
 interface Props {
   visible: boolean;
@@ -30,11 +31,11 @@ export default function DisconnectModal({ visible, onCancel, onConfirm }: Props)
 const s = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.4)', justifyContent: 'center', alignItems: 'center', padding: 32 },
   card: { backgroundColor: '#fff', borderRadius: 20, padding: 24, width: '100%', gap: 12 },
-  title: { fontSize: 18, fontWeight: '800', color: '#1A1A1A', textAlign: 'center' },
+  title: { fontSize: 18, fontWeight: '800', color: NM.text, textAlign: 'center' },
   sub: { fontSize: 13, color: '#999', textAlign: 'center' },
   row: { flexDirection: 'row', gap: 10, marginTop: 8 },
-  cancelBtn: { flex: 1, backgroundColor: '#F4F4F4', borderRadius: 12, paddingVertical: 14, alignItems: 'center' },
-  cancelT: { fontSize: 14, fontWeight: '700', color: '#1A1A1A' },
-  confirmBtn: { flex: 1, backgroundColor: '#FEE2E2', borderRadius: 12, paddingVertical: 14, alignItems: 'center' },
-  confirmT: { fontSize: 14, fontWeight: '700', color: '#DC2626' },
+  cancelBtn: { flex: 1, backgroundColor: NM.surface, borderRadius: 12, paddingVertical: 14, alignItems: 'center' },
+  cancelT: { fontSize: 14, fontWeight: '700', color: NM.text },
+  confirmBtn: { flex: 1, backgroundColor: NM.errorBg, borderRadius: 12, paddingVertical: 14, alignItems: 'center' },
+  confirmT: { fontSize: 14, fontWeight: '700', color: NM.error },
 });

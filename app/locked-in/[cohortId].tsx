@@ -31,13 +31,9 @@ import { isFull } from '../../lib/lockedIn/visibility'
 import { isWalletCancel, sendWithWallet, TxError } from '../../lib/lockedIn/tx'
 import { backInWallet, withdrawButton, withdrawErrorAlert } from '../../lib/lockedIn/withdraw'
 import { getConnection } from '../../lib/solana'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  bg: '#FAFAF9', bg2: '#F5F4F1',
-  card: '#FFFFFF', dark: '#2D2926',
-  amber: '#D97706', amber2: '#F59E0B', amberBg: '#FFFBEB',
-  text: '#1C1917', sub: '#78716C', muted: '#A8A29E', line: '#E7E5E4',
-}
+const C = NM_COLORS
 
 const DAILY_TARGET = 30
 const OK_ONLY: PopupAction[] = [{ label: 'OK', primary: true }]

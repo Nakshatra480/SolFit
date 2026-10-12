@@ -1,6 +1,7 @@
 import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { NM_COLORS } from '../constants/naturalMotion'
 
-const C = { card: '#FFFFFF', dark: '#2D2926', light: '#EDECEA', text: '#1C1917', sub: '#78716C' }
+const C = NM_COLORS
 
 export interface PopupAction {
   label: string

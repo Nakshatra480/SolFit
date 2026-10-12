@@ -30,6 +30,16 @@ async function fetchWithTimeout(url: string, init: RequestInit, ms: number): Pro
   }
 }
 
+/**
+ * Wakes the sign-in server without waiting for it. The free host sleeps when idle and takes ~40 s
+ * to start, so the app calls this at launch and the server is usually awake by the time someone
+ * taps Connect Wallet. Fire-and-forget: failures are ignored, and nothing is signed or sent.
+ */
+export function warmSignInServer(): void {
+  if (!FUNCTIONS_URL) return;
+  fetch(`${FUNCTIONS_URL}/healthz`, { method: 'GET' }).catch(() => {});
+}
+
 /** The sign-in payload to pass to MWA `authorize`, or null when the server can't be reached. */
 export async function fetchSignInPayload(): Promise<SignInPayload | null> {
   if (!FUNCTIONS_URL) {

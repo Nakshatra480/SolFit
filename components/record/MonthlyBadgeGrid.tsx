@@ -2,12 +2,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { RARITY_COLOR } from '../../constants/rarity'
 import { FIRST_BADGE_MONTH, type MonthKey, monthLabel, type MonthlyBadge } from '../../lib/record'
 import { MonthlyMedal } from './MonthlyMedal'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  card: '#FFFFFF', bg2: '#F5F4F1', dark: '#2D2926',
-  amber2: '#F59E0B',
-  text: '#1C1917', sub: '#78716C', muted: '#A8A29E', line: '#E7E5E4',
-}
+const C = NM_COLORS
 
 /**
  * Locked until the month's workouts earn it, then Unlocked (claimable) until claimed. Checking: a

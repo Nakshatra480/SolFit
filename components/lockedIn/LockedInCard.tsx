@@ -5,12 +5,9 @@ import { useWallet } from '../../context/WalletContext'
 import { useCohorts } from '../../hooks/useCohorts'
 import { useJoinedCohorts } from '../../hooks/useLockedIn'
 import { cardSubtitle, shownCohorts } from '../../lib/lockedIn/visibility'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  card: '#FFFFFF', dark: '#2D2926', dark3: '#57524E', bg2: '#F5F4F1', bg3: '#EDECEA',
-  amber: '#D97706', amber2: '#F59E0B', amberBg: '#FFFBEB',
-  text: '#1C1917', sub: '#78716C', muted: '#A8A29E', line: '#E7E5E4',
-}
+const C = NM_COLORS
 
 export function LockedInCard() {
   const { dataAddress } = useWallet()

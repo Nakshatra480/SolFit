@@ -11,13 +11,9 @@ import { useWallet } from '../../context/WalletContext'
 import { updateChallengeProgress } from '../../hooks/challengeProgress'
 import { ALL_BADGES } from '../../hooks/useBadges'
 import { calcAngle, usePoseLandmarker, type PoseLandmarks } from '../../hooks/usePoseLandmarker'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  bg: '#FAFAF9', bg2: '#F5F4F1', bg3: '#EDECEA',
-  dark: '#2D2926', amber: '#D97706', amber2: '#F59E0B',
-  text: '#1C1917', muted: '#A8A29E', line: '#E7E5E4',
-  green: '#10B981', red: '#EF4444',
-}
+const C = NM_COLORS
 
 const POINTS_PER_REP = 5
 const TARGET = 30
@@ -739,15 +735,15 @@ const s = StyleSheet.create({
 
 
   modeHint:      { position: 'absolute', top: 56, left: 16, right: 16, alignItems: 'center' },
-  modeHintBox:   { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: 'rgba(0,0,0,0.45)', borderWidth: 1, borderColor: 'rgba(217,119,6,0.5)', borderRadius: 14, paddingVertical: 10, paddingHorizontal: 16 },
-  modeHintIcon:  { fontSize: 18, color: C.amber2 },
+  modeHintBox:   { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: 'rgba(0,0,0,0.45)', borderWidth: 1, borderColor: 'rgba(221,233,201,0.45)', borderRadius: 14, paddingVertical: 10, paddingHorizontal: 16 },
+  modeHintIcon:  { fontSize: 18, color: C.amber3 },
   // flexShrink lets a long hint fit the screen width (and shrink its text) instead of overflowing.
   modeHintText:  { fontSize: 13, fontWeight: '700', color: 'rgba(255,255,255,0.85)', flexShrink: 1 },
 
-  angleBadge:  { backgroundColor: 'rgba(0,0,0,0.65)', borderWidth: 1, borderColor: 'rgba(217,119,6,0.35)', borderRadius: 14, padding: 12, alignItems: 'center' },
-  angleLabel:  { color: 'rgba(255,255,255,0.35)', fontSize: 8, letterSpacing: 1, marginBottom: 2 },
-  angleValue:  { color: C.amber2, fontSize: 28, fontWeight: '900', lineHeight: 30 },
-  angleTarget: { color: 'rgba(255,255,255,0.25)', fontSize: 8, marginTop: 2 },
+  angleBadge:  { backgroundColor: 'rgba(0,0,0,0.65)', borderWidth: 1, borderColor: 'rgba(221,233,201,0.35)', borderRadius: 14, padding: 12, alignItems: 'center' },
+  angleLabel:  { color: 'rgba(255,255,255,0.6)', fontSize: 8, letterSpacing: 1, marginBottom: 2 },
+  angleValue:  { color: C.amber3, fontSize: 28, fontWeight: '900', lineHeight: 30 },
+  angleTarget: { color: 'rgba(255,255,255,0.5)', fontSize: 8, marginTop: 2 },
 
   // A small bottom padding: the camera above (flex: 1) takes the rest of the height.
   panel:        { backgroundColor: C.bg, paddingHorizontal: 20, paddingTop: 18, paddingBottom: 22 },
@@ -763,9 +759,9 @@ const s = StyleSheet.create({
   progressFill:  { height: 5, backgroundColor: C.amber2, borderRadius: 100 },
 
   btnRow:          { flexDirection: 'row', gap: 10 },
-  btnPrimary:      { flex: 1.4, backgroundColor: C.dark, borderRadius: 14, paddingVertical: 14, alignItems: 'center' },
-  btnStop:         { backgroundColor: '#EF4444' },
-  btnPrimaryText:  { color: C.amber2, fontSize: 15, fontWeight: '700' },
+  btnPrimary:      { flex: 1.4, backgroundColor: C.amber2, borderRadius: 14, paddingVertical: 14, alignItems: 'center' },
+  btnStop:         { backgroundColor: C.red },
+  btnPrimaryText:  { color: '#fff', fontSize: 15, fontWeight: '700' },
   // White on the red Finish button, which amber didn't read well against.
   btnStopText:     { color: '#fff' },
   btnSecondary:    { flex: 1, backgroundColor: C.bg2, borderRadius: 14, paddingVertical: 14, alignItems: 'center', borderWidth: 1.5, borderColor: C.line },
@@ -779,18 +775,18 @@ const s = StyleSheet.create({
   permTitle:   { fontSize: 22, fontWeight: '800', color: C.text, marginBottom: 12 },
   permDesc:    { fontSize: 14, color: C.muted, textAlign: 'center', marginBottom: 32, lineHeight: 22 },
   permBtn:     { backgroundColor: C.amber2, paddingHorizontal: 32, paddingVertical: 14, borderRadius: 100 },
-  permBtnText: { color: C.dark, fontSize: 15, fontWeight: '800' },
+  permBtnText: { color: '#fff', fontSize: 15, fontWeight: '800' },
 
   modalOverlay:     { flex: 1, backgroundColor: 'rgba(0,0,0,0.5)', justifyContent: 'flex-end' },
-  modalBox:         { backgroundColor: '#FAFAF9', borderTopLeftRadius: 28, borderTopRightRadius: 28, padding: 28, paddingBottom: 40, alignItems: 'center' },
-  modalHandle:      { width: 36, height: 4, backgroundColor: '#E7E5E4', borderRadius: 100, marginBottom: 24 },
-  modalTitle:       { fontSize: 22, fontWeight: '900', color: '#1C1917', marginBottom: 20 },
-  modalDesc:        { fontSize: 14, color: '#78716C', textAlign: 'center', lineHeight: 22, marginBottom: 24 },
+  modalBox:         { backgroundColor: C.bg, borderTopLeftRadius: 28, borderTopRightRadius: 28, padding: 28, paddingBottom: 40, alignItems: 'center' },
+  modalHandle:      { width: 36, height: 4, backgroundColor: C.line, borderRadius: 100, marginBottom: 24 },
+  modalTitle:       { fontSize: 22, fontWeight: '900', color: C.text, marginBottom: 20 },
+  modalDesc:        { fontSize: 14, color: C.sub, textAlign: 'center', lineHeight: 22, marginBottom: 24 },
   modalStatRow:     { flexDirection: 'row', gap: 32, marginBottom: 28, alignItems: 'center' },
   modalStat:        { alignItems: 'center' },
-  modalStatVal:     { fontSize: 40, fontWeight: '900', color: '#1C1917' },
-  modalStatLbl:     { fontSize: 10, color: '#A8A29E', letterSpacing: 1, marginTop: 4 },
-  modalStatDivider: { width: 1, height: 48, backgroundColor: '#E7E5E4' },
-  modalBtn:         { width: '100%', backgroundColor: '#2D2926', borderRadius: 14, paddingVertical: 16, alignItems: 'center' },
-  modalBtnText:     { color: '#F59E0B', fontSize: 15, fontWeight: '800' },
+  modalStatVal:     { fontSize: 40, fontWeight: '900', color: C.amber },
+  modalStatLbl:     { fontSize: 10, color: C.sub, letterSpacing: 1, marginTop: 4 },
+  modalStatDivider: { width: 1, height: 48, backgroundColor: C.line },
+  modalBtn:         { width: '100%', backgroundColor: C.amber2, borderRadius: 14, paddingVertical: 16, alignItems: 'center' },
+  modalBtnText:     { color: '#fff', fontSize: 15, fontWeight: '800' },
 })

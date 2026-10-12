@@ -1,9 +1,11 @@
 import { Tabs } from 'expo-router';
 import { Text, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { NM } from '../../constants/naturalMotion';
 import { ClaimsProvider, useClaims } from '../../context/ClaimsContext';
 
 function TabIcon({ symbol, color }: { symbol: string; color: string }) {
-  return <Text style={{ fontSize: 20, color }}>{symbol}</Text>;
+  return <Text style={{ fontSize: 21, lineHeight: 24, color }}>{symbol}</Text>;
 }
 
 /** The Badges icon, with a red dot while any badge can be claimed. */
@@ -13,25 +15,28 @@ function BadgesIcon({ color }: { color: string }) {
     <View>
       <TabIcon symbol="✦" color={color} />
       {readyCount > 0 && (
-        <View style={{ position: 'absolute', top: 0, right: -6, width: 8, height: 8, borderRadius: 4, backgroundColor: '#EF4444' }} />
+        <View style={{ position: 'absolute', top: 0, right: -6, width: 8, height: 8, borderRadius: 4, backgroundColor: NM.error }} />
       )}
     </View>
   );
 }
 
 export default function TabLayout() {
+  // The bar sits above Android's navigation buttons or gesture handle, whatever its height.
+  const insets = useSafeAreaInsets();
   return (
     // Badge claims for Goals and Badges alike, and the Badges icon's dot (context/ClaimsContext.tsx).
     <ClaimsProvider>
       <Tabs screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: '#F59E0B',
-        tabBarInactiveTintColor: '#A8A29E',
+        tabBarActiveTintColor: NM.accent,
+        tabBarInactiveTintColor: NM.textSub,
+        tabBarLabelStyle: { fontSize: 11, fontWeight: '600' },
         tabBarStyle: {
-          backgroundColor: '#FFFFFF',
-          borderTopColor: '#E8E6E3',
-          height: 84,
-          paddingBottom: 24,
+          backgroundColor: NM.card,
+          borderTopColor: NM.line,
+          height: 60 + Math.max(insets.bottom, 8),
+          paddingBottom: Math.max(insets.bottom, 8),
           paddingTop: 8,
         },
       }}>

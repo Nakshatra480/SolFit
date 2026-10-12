@@ -7,7 +7,7 @@ import { PublicKey } from '@solana/web3.js';
 import * as SecureStore from 'expo-secure-store';
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Alert, Linking } from 'react-native';
-import { fetchSignInPayload, signInAddress, SignInError, signInErrorMessage, verifySignIn } from '../lib/signIn';
+import { fetchSignInPayload, signInAddress, SignInError, signInErrorMessage, verifySignIn, warmSignInServer } from '../lib/signIn';
 import { connectFailure, WALLET_APPS } from '../lib/walletErrors';
 
 /** A connect that fails before any wallet is connected has no screen to show it on, so it alerts. */
@@ -71,7 +71,9 @@ const STORAGE_KEY = 'solfit.wallet.session';
 const SOLFIT_IDENTITY = {
   name: 'SolFit',
   uri: 'https://solfit.digitiumlabs.com',
-  icon: 'icon.png',
+  // A file name wallets have never cached: Phantom keeps icons by URL, so it kept showing the
+  // old icon.png. Give any future icon a new name too.
+  icon: 'solfit-wallet-icon.png',
 } as const;
 const CHAIN = 'solana:mainnet';
 
@@ -243,6 +245,9 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
     : 'needed';
   const dataAddress = session === 'ready' ? address : null;
   const awaitingSignIn = address !== null && !connecting && (session === 'needed' || session === 'signingIn');
+
+  // Wake the sign-in server at launch so Connect Wallet doesn't wait for it to start (lib/signIn.ts).
+  useEffect(() => { warmSignInServer(); }, []);
 
   // Cold-start restore: read cached session, set publicKey + authTokenRef
   // optimistically. Does NOT call transact() / reauthorize — wallet app

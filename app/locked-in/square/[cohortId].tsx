@@ -23,13 +23,9 @@ import {
 import { formatUtc, NBSP } from '../../../lib/lockedIn/time'
 import { isWalletCancel, sendWithWallet } from '../../../lib/lockedIn/tx'
 import { getConnection } from '../../../lib/solana'
+import { NM_COLORS } from '../../../constants/naturalMotion'
 
-const C = {
-  bg: '#FAFAF9',
-  card: '#FFFFFF', dark: '#2D2926',
-  amber: '#D97706', amber2: '#F59E0B',
-  text: '#1C1917', sub: '#78716C', muted: '#A8A29E', line: '#E7E5E4',
-}
+const C = NM_COLORS
 
 const OK_ONLY: PopupAction[] = [{ label: 'OK', primary: true }]
 // While a pick waits, the cohort account is read this often as well, in case the server's record

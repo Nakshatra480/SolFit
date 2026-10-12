@@ -1,9 +1,8 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { BottomSheet } from './BottomSheet'
+import { NM_COLORS } from '../constants/naturalMotion'
 
-const C = {
-  dark: '#2D2926', amber2: '#F59E0B', text: '#1C1917', sub: '#78716C', muted: '#A8A29E',
-}
+const C = NM_COLORS
 
 // Mirrors the workout screen (app/(tabs)/workout.tsx), in the order a user actually goes: the
 // front camera preview is on before Start, Start begins the timer and counting at once, only a

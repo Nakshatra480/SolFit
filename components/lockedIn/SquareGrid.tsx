@@ -1,11 +1,9 @@
 import { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { BOARD_SQUARES } from '../../lib/lockedIn/program'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  cell: '#F5F4F1', line: '#E7E5E4', sub: '#78716C',
-  dark: '#2D2926', amber: '#D97706', amberBg: '#FFFBEB',
-}
+const C = NM_COLORS
 
 const SIDE = Math.sqrt(BOARD_SQUARES)
 const GAP = 8

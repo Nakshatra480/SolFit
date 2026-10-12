@@ -1,7 +1,8 @@
 import { type ReactNode, useEffect, useMemo, useRef, useState } from 'react'
 import { Animated, Dimensions, Modal, PanResponder, Pressable, StyleSheet, Text, View } from 'react-native'
+import { NM_COLORS } from '../constants/naturalMotion'
 
-const C = { card: '#FFFFFF', text: '#1C1917', line: '#E7E5E4' }
+const C = NM_COLORS
 
 // How far, or how fast, the handle must be pulled down before the sheet closes.
 const CLOSE_DISTANCE = 100

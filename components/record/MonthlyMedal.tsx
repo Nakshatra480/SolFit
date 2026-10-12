@@ -2,11 +2,12 @@ import { LinearGradient } from 'expo-linear-gradient'
 import { StyleSheet, Text, View } from 'react-native'
 import { RARITY_COLOR } from '../../constants/rarity'
 import type { MonthlyBadge } from '../../lib/record'
+import { NM } from '../../constants/naturalMotion'
 
-// Every medal is the same light orange (SolFit's orange, brightened); the rim takes the rarity's
+// Every medal is the same pale sage (Natural Motion's highlight); the rim takes the rarity's
 // color (constants/rarity.ts), so the rarity shows without changing the medal.
-const FILL: [string, string] = ['#FFC870', '#FFA500']
-const LOCKED: [string, string] = ['#E7E5E4', '#D6D3D1']
+const FILL: [string, string] = ['#E9F1DB', '#C8DCAE']
+const LOCKED: [string, string] = [NM.surface, NM.line]
 
 /**
  * A monthly badge drawn as a medal: the number of days it takes ("ALL" for every day of the month),
@@ -44,10 +45,10 @@ const s = StyleSheet.create({
   medal: { width: SIZE, height: SIZE, borderRadius: SIZE / 2, borderWidth: 3, alignItems: 'center', justifyContent: 'center' },
   // An inner ring, like the rim of a coin.
   ring:    { width: RING, height: RING, borderRadius: RING / 2, borderWidth: 1.5, borderColor: 'rgba(255,255,255,0.7)', alignItems: 'center', justifyContent: 'center' },
-  num:     { fontSize: 18, lineHeight: 20, fontWeight: '900', color: '#78350F' },
+  num:     { fontSize: 18, lineHeight: 20, fontWeight: '900', color: NM.text },
   numLong: { fontSize: 13, lineHeight: 16 },
-  unit:    { fontSize: 7, fontWeight: '800', letterSpacing: 1, color: '#92400E' },
-  textOff: { color: '#A8A29E' },
-  check:     { position: 'absolute', right: -2, bottom: -2, width: 20, height: 20, borderRadius: 10, backgroundColor: '#2D2926', borderWidth: 2, borderColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' },
+  unit:    { fontSize: 7, fontWeight: '800', letterSpacing: 1, color: NM.accent },
+  textOff: { color: NM.disabled },
+  check:     { position: 'absolute', right: -2, bottom: -2, width: 20, height: 20, borderRadius: 10, backgroundColor: NM.accent, borderWidth: 2, borderColor: '#FFFFFF', alignItems: 'center', justifyContent: 'center' },
   checkText: { fontSize: 10, lineHeight: 12, fontWeight: '900', color: '#FFFFFF' },
 })

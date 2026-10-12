@@ -7,13 +7,9 @@ import { useBadges } from '../../hooks/useBadges'
 import { usePoints } from '../../hooks/usePoints'
 import { useUserStats } from '../../hooks/useUserStats'
 import { dataLoading } from '../../lib/dataLoading'
+import { NM_COLORS } from '../../constants/naturalMotion'
 
-const C = {
-  bg: '#FAFAF9', bg2: '#F5F4F1', bg3: '#EDECEA',
-  card: '#FFFFFF', dark: '#2D2926', dark2: '#3A3532',
-  amber: '#D97706', amber2: '#F59E0B', amberBg: '#FFFBEB',
-  text: '#1C1917', sub: '#78716C', muted: '#A8A29E', line: '#E7E5E4',
-}
+const C = NM_COLORS
 
 function getActivityIcon(reason: string) {
   const r = reason.toLowerCase()
@@ -75,7 +71,7 @@ export default function ProfileScreen() {
         {/* Profile Card */}
         <View style={s.profileCard}>
           <View style={s.avatarWrap}>
-            <Text style={s.avatarText}>K</Text>
+            <Text style={s.avatarText}>S</Text>
           </View>
           <Text style={s.profileName}>SolFit User</Text>
           <Text style={s.profileRole}>{shortAddress ?? 'Wallet not connected'}</Text>
@@ -108,7 +104,7 @@ export default function ProfileScreen() {
         <TouchableOpacity style={s.walletCard} onPress={publicKey ? () => setShowDisconnect(true) : connect} activeOpacity={0.8}>
           <Text style={s.walletHeader}>SOLANA WALLET</Text>
           <View style={s.walletRow}>
-            <View style={[s.walletIndicator, { backgroundColor: publicKey ? C.amber2 : '#EF4444' }]}/>
+            <View style={[s.walletIndicator, { backgroundColor: publicKey ? C.amber3 : C.red }]}/>
             <View style={{ flex: 1 }}>
               <Text style={s.walletAddr}>{shortAddress ?? 'Not Connected'}</Text>
               <Text style={s.walletBal}>{publicKey ? 'Balance: -- SOL' : 'Not Connected'}</Text>
@@ -242,21 +238,21 @@ const s = StyleSheet.create({
   scroll: { flex: 1, paddingHorizontal: 20 },
 
   header:              { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 16 },
-  headerTitle:         { fontSize: 22, fontWeight: '800', color: C.text },
+  headerTitle:         { fontSize: 26, fontWeight: '800', color: C.text, letterSpacing: -0.6 },
   walletBtn:           { backgroundColor: C.dark, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 100 },
   walletBtnText:       { color: '#fff', fontSize: 12, fontWeight: '700' },
   walletConnected:     { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: C.dark, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 100 },
-  walletDot:           { width: 7, height: 7, borderRadius: 4, backgroundColor: C.amber2 },
+  walletDot:           { width: 7, height: 7, borderRadius: 4, backgroundColor: C.amber3 },
   walletConnectedText: { color: '#fff', fontSize: 12, fontWeight: '700' },
 
   profileCard:    { backgroundColor: C.dark, borderRadius: 24, padding: 24, marginBottom: 16, alignItems: 'center' },
-  avatarWrap:     { width: 72, height: 72, borderRadius: 36, backgroundColor: C.dark2, borderWidth: 2, borderColor: `${C.amber}66`, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
-  avatarText:     { fontSize: 28, fontWeight: '800', color: C.amber2 },
+  avatarWrap:     { width: 72, height: 72, borderRadius: 36, backgroundColor: C.dark2, borderWidth: 2, borderColor: `${C.amber3}66`, alignItems: 'center', justifyContent: 'center', marginBottom: 12 },
+  avatarText:     { fontSize: 28, fontWeight: '800', color: C.amber3 },
   profileName:    { fontSize: 20, fontWeight: '800', color: '#fff', marginBottom: 4 },
   profileRole:    { fontSize: 11, color: 'rgba(255,255,255,0.4)', marginBottom: 14 },
   badgeRow:       { flexDirection: 'row', gap: 8, flexWrap: 'wrap', justifyContent: 'center' },
-  badgeAmber:     { backgroundColor: `${C.amber}22`, borderWidth: 1, borderColor: `${C.amber}44`, paddingHorizontal: 12, paddingVertical: 5, borderRadius: 100 },
-  badgeAmberText: { fontSize: 11, fontWeight: '700', color: C.amber2 },
+  badgeAmber:     { backgroundColor: `${C.amber3}22`, borderWidth: 1, borderColor: `${C.amber3}55`, paddingHorizontal: 12, paddingVertical: 5, borderRadius: 100 },
+  badgeAmberText: { fontSize: 11, fontWeight: '700', color: C.amber3 },
   hidden:         { opacity: 0 },
   badge:          { backgroundColor: 'rgba(255,255,255,0.08)', paddingHorizontal: 12, paddingVertical: 5, borderRadius: 100 },
   badgeText:      { fontSize: 11, color: 'rgba(255,255,255,0.6)' },
@@ -272,8 +268,8 @@ const s = StyleSheet.create({
   walletIndicator: { width: 10, height: 10, borderRadius: 5 },
   walletAddr:      { fontSize: 13, fontWeight: '600', color: '#fff' },
   walletBal:       { fontSize: 11, color: 'rgba(255,255,255,0.35)', marginTop: 2 },
-  connectedBadge:  { backgroundColor: `${C.amber}22`, borderWidth: 1, borderColor: `${C.amber}44`, paddingHorizontal: 12, paddingVertical: 5, borderRadius: 100 },
-  connectedText:   { fontSize: 11, fontWeight: '700', color: C.amber2 },
+  connectedBadge:  { backgroundColor: `${C.amber3}22`, borderWidth: 1, borderColor: `${C.amber3}55`, paddingHorizontal: 12, paddingVertical: 5, borderRadius: 100 },
+  connectedText:   { fontSize: 11, fontWeight: '700', color: C.amber3 },
 
   menuRow:      { flexDirection: 'row', alignItems: 'center', gap: 14, paddingVertical: 14 },
   menuBorder:   { borderBottomWidth: 1, borderBottomColor: C.line },

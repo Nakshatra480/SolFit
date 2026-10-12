@@ -11,13 +11,10 @@ import { homeQuests, useChallenges, type ChallengeView } from '../../hooks/useCh
 import { useGoals } from '../../hooks/useGoals'
 import { useUserStats } from '../../hooks/useUserStats'
 import { dataLoading } from '../../lib/dataLoading'
+import { NM_COLORS } from '../../constants/naturalMotion'
+import { SolFitMark } from '../../components/StartupLoader'
 
-const C = {
-  bg: '#FAFAF9', bg2: '#F5F4F1', bg3: '#EDECEA',
-  card: '#FFFFFF', dark: '#2D2926', dark2: '#3A3532', dark3: '#57524E',
-  amber: '#D97706', amber2: '#F59E0B', amber3: '#FCD34D', amberBg: '#FFFBEB',
-  text: '#1C1917', sub: '#78716C', muted: '#A8A29E', line: '#E7E5E4',
-}
+const C = NM_COLORS
 
 // Live calendar day index (instance.progress.dayIndex only updates on workout save).
 function liveDayIndex(q: ChallengeView): number {
@@ -65,10 +62,13 @@ export default function HomeScreen() {
 
         {/* Header */}
         <View style={s.header}>
-          <Text style={s.logo}>
-            <Text style={{ color: C.dark }}>Kin</Text>
-            <Text style={{ color: C.amber2 }}>log</Text>
-          </Text>
+          <View style={s.brand}>
+            <SolFitMark size={38} />
+            <Text style={s.logo}>
+              <Text style={{ color: C.dark }}>Sol</Text>
+              <Text style={{ color: C.amber2 }}>Fit</Text>
+            </Text>
+          </View>
           {publicKey ? (
             <TouchableOpacity style={s.walletConnected} onPress={() => setShowDisconnect(true)}>
               <View style={s.walletDot}/>
@@ -131,7 +131,7 @@ export default function HomeScreen() {
             <Text style={s.startBtnTitle}>Start Session</Text>
           </View>
           <View style={s.startBtnIcon}>
-            <Text style={{ color: C.amber2, fontSize: 18 }}>▶</Text>
+            <Text style={{ color: '#fff', fontSize: 18 }}>{'\u25B6\uFE0E'}</Text>
           </View>
         </TouchableOpacity>
 
@@ -246,42 +246,43 @@ const s = StyleSheet.create({
   scroll: { flex: 1, paddingHorizontal: 20 },
 
   header:             { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingTop: 16, paddingBottom: 11 },
-  logo:               { fontSize: 30, fontWeight: '800', letterSpacing: -0.5 },
+  brand:              { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  logo:               { fontSize: 28, fontWeight: '800', letterSpacing: -0.5 },
   walletBtn:          { backgroundColor: C.dark, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 100 },
   walletBtnText:      { color: '#fff', fontSize: 12, fontWeight: '700' },
   walletConnected:    { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: C.dark, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 100 },
-  walletDot:          { width: 7, height: 7, borderRadius: 4, backgroundColor: C.amber2 },
+  walletDot:          { width: 7, height: 7, borderRadius: 4, backgroundColor: C.amber3 },
   walletConnectedText:{ color: '#fff', fontSize: 12, fontWeight: '700' },
 
   // Header bottom padding (11) is the whole gap between the logo row and the title.
   greet:      { paddingBottom: 16 },
   greetTitle: { fontSize: 26, color: C.text, fontWeight: '800', letterSpacing: -0.8 },
 
-  progressCard:     { backgroundColor: C.dark, borderRadius: 24, padding: 22, marginBottom: 14 },
+  progressCard:     { backgroundColor: C.card, borderRadius: 20, padding: 22, marginBottom: 14, borderWidth: 1, borderColor: C.line },
   progressTop:      { marginBottom: 16 },
-  progressLabel:    { fontSize: 12.5, color: 'rgba(255,255,255,0.4)', letterSpacing: 1.2, marginBottom: 6 },
-  progressReps:     { fontSize: 52, color: '#fff', fontWeight: '900', lineHeight: 56 },
-  progressTarget:   { fontSize: 15, color: 'rgba(255,255,255,0.35)', marginBottom: 8 },
-  progressBar:      { height: 5, backgroundColor: 'rgba(255,255,255,0.08)', borderRadius: 100, marginBottom: 10, overflow: 'hidden' },
-  progressFill:     { height: 5, backgroundColor: C.amber2, borderRadius: 100 },
-  progressNote:     { fontSize: 12, color: 'rgba(255,255,255,0.35)' },
+  progressLabel:    { fontSize: 12, color: C.sub, letterSpacing: 1.2, marginBottom: 6, fontWeight: '600' },
+  progressReps:     { fontSize: 52, color: C.text, fontWeight: '900', lineHeight: 56 },
+  progressTarget:   { fontSize: 15, color: C.sub, marginBottom: 8, fontWeight: '500' },
+  progressBar:      { height: 8, backgroundColor: C.bg2, borderRadius: 100, marginBottom: 10, overflow: 'hidden' },
+  progressFill:     { height: 8, backgroundColor: C.amber2, borderRadius: 100 },
+  progressNote:     { fontSize: 12, color: C.sub },
   progressPct:      { fontSize: 12, fontWeight: '700', color: C.amber2 },
 
   statsRow:        { flexDirection: 'row', gap: 10, marginBottom: 14 },
-  statCard:        { flex: 1, backgroundColor: C.card, borderRadius: 18, padding: 14, borderWidth: 1.5, borderColor: C.line },
-  statCardAccent:  { backgroundColor: C.amberBg, borderColor: `${C.amber}33` },
+  statCard:        { flex: 1, backgroundColor: C.card, borderRadius: 18, padding: 14, borderWidth: 1, borderColor: C.line },
+  statCardAccent:  { backgroundColor: C.amberBg, borderColor: C.amberBg },
   statValue:       { fontSize: 20, fontWeight: '800', color: C.text, marginBottom: 4 },
   statValueAccent: { color: C.amber },
   statLabel:       { fontSize: 11, color: C.muted, letterSpacing: 0.5, textTransform: 'uppercase' },
   statLabelAccent: { color: C.amber },
 
-  startBtn:         { backgroundColor: C.amber2, borderRadius: 18, padding: 18, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, shadowColor: C.amber, shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.35, shadowRadius: 16, elevation: 8 },
-  startBtnExercise: { fontSize: 28, fontWeight: '900', color: C.dark, letterSpacing: -0.5, marginBottom: 4 },
-  startBtnTitle:    { fontSize: 16, fontWeight: '800', color: C.dark },
-  startBtnIcon:     { width: 44, height: 44, borderRadius: 22, backgroundColor: C.dark, alignItems: 'center', justifyContent: 'center' },
+  startBtn:         { backgroundColor: C.amber2, borderRadius: 18, padding: 18, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10, shadowColor: C.dark, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.12, shadowRadius: 10, elevation: 3 },
+  startBtnExercise: { fontSize: 28, fontWeight: '900', color: '#fff', letterSpacing: -0.5, marginBottom: 4 },
+  startBtnTitle:    { fontSize: 16, fontWeight: '700', color: 'rgba(255,255,255,0.88)' },
+  startBtnIcon:     { width: 44, height: 44, borderRadius: 22, backgroundColor: 'rgba(255,255,255,0.18)', alignItems: 'center', justifyContent: 'center' },
   howToRow:         { flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 12 },
   howToPill:        { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: C.dark, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 100 },
-  howToPillIcon:    { color: C.amber2, fontSize: 13, fontWeight: '800' },
+  howToPillIcon:    { color: C.amber3, fontSize: 13, fontWeight: '800' },
   howToPillText:    { color: '#fff', fontSize: 12, fontWeight: '700' },
 
   section:       { marginBottom: 24 },
@@ -302,11 +303,11 @@ const s = StyleSheet.create({
   questCardProgressPct:    { fontSize: 10, fontWeight: '700', color: '#fff' },
 
   questClaim:          { backgroundColor: C.amber2, borderRadius: 18, padding: 18, shadowColor: C.amber, shadowOffset: { width: 0, height: 8 }, shadowOpacity: 0.35, shadowRadius: 16, elevation: 8 },
-  questClaimLabel:     { fontSize: 9, color: `${C.dark}99`, letterSpacing: 1.5, fontWeight: '700' },
+  questClaimLabel:     { fontSize: 9, color: 'rgba(255,255,255,0.75)', letterSpacing: 1.5, fontWeight: '700' },
   questClaimBadge:     { backgroundColor: C.dark, borderRadius: 100, paddingHorizontal: 8, paddingVertical: 3 },
   questClaimBadgeText: { fontSize: 10, color: '#fff', fontWeight: '700' },
-  questClaimTitle:     { fontSize: 18, fontWeight: '900', color: C.dark, letterSpacing: -0.4, marginBottom: 2 },
-  questClaimReward:    { fontSize: 12, color: `${C.dark}CC`, marginBottom: 14, fontWeight: '600' },
+  questClaimTitle:     { fontSize: 18, fontWeight: '900', color: '#fff', letterSpacing: -0.4, marginBottom: 2 },
+  questClaimReward:    { fontSize: 12, color: 'rgba(255,255,255,0.88)', marginBottom: 14, fontWeight: '600' },
   questClaimCta:       { backgroundColor: C.dark, borderRadius: 12, paddingVertical: 12, alignItems: 'center' },
   questClaimCtaText:   { color: '#fff', fontSize: 14, fontWeight: '800' },
 
