@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SolFit for Android</title>
+  <meta name="description" content="SolFit counts your squats with on-device pose detection and keeps your streaks, goals and badges tied to your Solana wallet. Download the Android app.">
+  <link rel="icon" type="image/png" href="icon.png">
+  <link rel="apple-touch-icon" href="icon.png">
+  <meta property="og:title" content="SolFit for Android">
+  <meta property="og:description" content="Squat tracking with on-device pose detection, tied to your Solana wallet.">
+  <meta property="og:image" content="solfit-logo.png">
+  <style>
+    :root {
+      --bg: #F4F3EC; --card: #FFFFFF; --surface: #EAECE4; --text: #26372C; --sub: #788477;
+      --accent: #52765A; --highlight: #DDE9C9; --line: #E0E3DA; --error: #C64D48;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 32px 16px 56px; }
+
+    header.hero { text-align: center; padding: 24px 0 8px; }
+    .hero img { width: 112px; height: 112px; }
+    .hero h1 { font-size: 40px; font-weight: 800; letter-spacing: -1px; margin-top: 12px; }
+    .hero h1 span { color: var(--accent); }
+    .hero p.lede { color: var(--sub); font-size: 17px; max-width: 520px; margin: 8px auto 0; }
+
+    .download { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 24px; margin-top: 28px; text-align: center; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 0 28px; background: var(--accent); color: #fff; border-radius: 14px; font-size: 17px; font-weight: 700; text-decoration: none; width: 100%; max-width: 360px; }
+    .btn:focus-visible { outline: 3px solid var(--highlight); outline-offset: 3px; }
+    .meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
+    .chip { background: var(--surface); color: var(--text); border-radius: 100px; padding: 5px 12px; font-size: 13px; font-weight: 600; }
+    .fineprint { color: var(--sub); font-size: 13px; margin-top: 14px; }
+    .sha { font-family: ui-monospace, Menlo, monospace; font-size: 11px; color: var(--sub); word-break: break-all; margin-top: 8px; }
+
+    section { margin-top: 36px; }
+    h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: 12px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } .hero h1 { font-size: 34px; } }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px; }
+    .card h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .card p, li { color: var(--sub); font-size: 15px; }
+    .sage { background: var(--highlight); border-color: var(--highlight); }
+    .sage p, .sage li { color: var(--text); }
+    ol, ul { padding-left: 22px; }
+    li { margin: 6px 0; }
+    li strong { color: var(--text); }
+
+    footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--sub); font-size: 13px; text-align: center; }
+    footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin-bottom: 10px; }
+    footer a { text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <img src="solfit-logo.png" alt="SolFit emblem" width="112" height="112">
+      <h1>Sol<span>Fit</span></h1>
+      <p class="lede">Squat tracking that counts your reps with on-device pose detection, and keeps your streaks, goals and badges tied to your Solana wallet.</p>
+    </header>
+
+    <div class="download">
+      <a class="btn" id="download" href="https://github.com/Nakshatra480/solfit-releases/releases/latest/download/solfit-android.apk" download>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Download for Android
+      </a>
+      <div class="meta">
+        <span class="chip">Version 1.4.0</span>
+        <span class="chip">APK · 84.9 MB</span>
+        <span class="chip">Released 13 Oct 2026</span>
+        <span class="chip">Android 7.0+</span>
+      </div>
+      <p class="fineprint">This APK is distributed directly by SolFit. It is not installed from the Google Play Store.</p>
+      <p class="sha">SHA-256: ebe8ad009f706f0f39e33eb328bc5ec052d85ab2e1c0eee54a6864bcc0cb293e</p>
+    </div>
+
+    <section>
+      <h2>What's new in 1.4.0</h2>
+      <div class="card">
+        <ul>
+          <li>New SolFit look: the Natural Motion theme, a new emblem and an animated launch screen.</li>
+          <li>Sign in with your Solana wallet: one signed message, no transaction and no fee.</li>
+          <li>Clearer messages when no wallet app is installed or the sign-in server is waking up.</li>
+          <li>Steadier screens: a failed data connection no longer closes the app.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>What SolFit does</h2>
+      <div class="grid">
+        <div class="card"><h3>Counts squats with your camera</h3><p>Stand side-on to the phone and SolFit tracks your hip, knee and ankle to count each full squat.</p></div>
+        <div class="card"><h3>30 a day</h3><p>A daily target, streaks, weekly progress and a monthly calendar of the days you hit it.</p></div>
+        <div class="card"><h3>Badges</h3><p>Earn badges for milestones and streaks. Claiming one sends 0.001 SOL with a memo naming the badge.</p></div>
+        <div class="card"><h3>Your wallet is your account</h3><p>No email or password. Your wallet signs a one-time message to sign in; it never shares your keys.</p></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>How to install</h2>
+      <div class="card">
+        <ol>
+          <li>On your Android phone, tap <strong>Download for Android</strong> above.</li>
+          <li>Open the downloaded file <strong>solfit-android.apk</strong> from your browser's downloads or a notification.</li>
+          <li>Android may say your browser isn't allowed to install apps. Tap <strong>Settings</strong>, turn on <strong>Allow from this source</strong>, then go back.</li>
+          <li>Tap <strong>Install</strong>, then <strong>Open</strong>.</li>
+          <li>To sign in, install a Solana wallet app such as <strong>Phantom</strong> or <strong>Solflare</strong> first, then tap <strong>Connect Wallet</strong> in SolFit.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section>
+      <h2>Privacy</h2>
+      <div class="card sage">
+        <ul>
+          <li><strong>Camera:</strong> pose detection runs on your phone. Video is not recorded, saved or uploaded; each frame is analysed and discarded.</li>
+          <li><strong>What is stored:</strong> your public wallet address, workouts (reps, time, date), points, streaks and badges, in SolFit's Firebase database. Only your wallet's signed-in session can read or change them.</li>
+          <li><strong>Never collected:</strong> your private key or recovery phrase.</li>
+          <li><strong>Sign-in:</strong> a free signature only. SolFit never asks you to fund a wallet to sign in.</li>
+        </ul>
+        <p style="margin-top:10px">Full details: <a href="privacy-policy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Good to know</h2>
+      <div class="card">
+        <ul>
+          <li><strong>Needs internet</strong> for signing in and saving workouts. It is not an offline app.</li>
+          <li><strong>The first sign-in can take up to a minute.</strong> The sign-in server sleeps when idle and wakes on the first request.</li>
+          <li><strong>Android only.</strong> There is no iPhone version.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Troubleshooting</h2>
+      <div class="card">
+        <ul>
+          <li><strong>"App not installed":</strong> if you have an older SolFit test build, uninstall it first, then install again.</li>
+          <li><strong>"No Solana wallet found":</strong> install Phantom or Solflare, set up your wallet there, then try Connect Wallet again.</li>
+          <li><strong>Reps aren't counting:</strong> stand side-on, step back until your whole body from shoulder to ankle is in view, and use good light.</li>
+          <li><strong>"Couldn't reach the sign-in server":</strong> wait a moment and try again; the server may be waking up.</li>
+          <li><strong>Check your download:</strong> the file's SHA-256 should match the one shown above.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer>
+      <nav>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </nav>
+      <p>Based on <a href="https://github.com/Jamielimq/kinlog">Kinlog</a> by Jamielim, MIT License.</p>
+      <p>© 2026 SolFit</p>
+    </footer>
+  </div>
+</body>
+</html>

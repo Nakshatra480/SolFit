@@ -1,0 +1,2 @@
+- [Privacy Policy](https://solfit.digitiumlabs.com/privacy-policy.html)
+- [Terms of Service](https://solfit.digitiumlabs.com/terms.html)
