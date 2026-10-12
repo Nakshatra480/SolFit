@@ -1,260 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Privacy Policy – SolFit</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SolFit Privacy Policy</title>
+  <meta name="description" content="How SolFit, operated by Digitium Labs, collects, uses and protects your information.">
+  <link rel="icon" type="image/png" href="icon.png">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #FAFAF9;
-      color: #2D2926;
-      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
-      line-height: 1.7;
-      min-height: 100vh;
-    }
-    header {
-      position: sticky; top: 0; z-index: 10;
-      background: rgba(250,250,249,0.95);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid #E7E5E4;
-      padding: 18px 40px;
-      display: flex; align-items: center; gap: 14px;
-    }
-    .logo-mark {
-      width: 32px; height: 32px;
-      background: #2D2926;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700;
-      color: #D97706;
-    }
-    .logo-text {
-      font-size: 18px; font-weight: 700;
-      color: #2D2926;
-    }
-    .logo-text span { color: #D97706; }
-    .badge {
-      margin-left: auto;
-      font-size: 11px;
-      font-weight: 600;
-      color: #D97706;
-      background: #FFFBEB;
-      padding: 4px 12px;
-      border-radius: 20px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    main {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 60px 40px 100px;
-    }
-    .page-tag {
-      font-size: 12px;
-      font-weight: 600;
-      color: #D97706;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 16px;
-    }
-    h1 {
-      font-size: 42px;
-      font-weight: 700;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 12px;
-      color: #1C1917;
-    }
-    .subtitle {
-      color: #78716C;
-      font-size: 14px;
-      margin-bottom: 48px;
-    }
-    .divider {
-      width: 48px; height: 3px;
-      background: #D97706;
-      border-radius: 2px;
-      margin-bottom: 56px;
-    }
-    section {
-      margin-bottom: 32px;
-      padding: 28px 32px;
-      background: #FFFFFF;
-      border: 1px solid #E7E5E4;
-      border-radius: 12px;
-      position: relative;
-      overflow: hidden;
-    }
-    section::before {
-      content: '';
-      position: absolute; top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: #D97706;
-    }
-    h2 {
-      font-size: 18px;
-      font-weight: 600;
-      color: #2D2926;
-      margin-bottom: 14px;
-    }
-    h3 {
-      font-size: 15px;
-      font-weight: 600;
-      color: #2D2926;
-      margin-top: 16px;
-      margin-bottom: 8px;
-    }
-    p {
-      color: #57524E;
-      font-size: 15px;
-      margin-bottom: 12px;
-    }
-    p:last-child { margin-bottom: 0; }
-    strong { color: #2D2926; font-weight: 600; }
-    .highlight { color: #D97706; font-weight: 600; }
-    ul {
-      list-style: none;
-      margin: 10px 0;
-    }
-    ul li {
-      color: #57524E;
-      font-size: 15px;
-      padding: 5px 0 5px 20px;
-      position: relative;
-    }
-    ul li::before {
-      content: '▸';
-      color: #D97706;
-      position: absolute; left: 0;
-      font-size: 11px; top: 7px;
-    }
-    a { color: #D97706; text-decoration: none; font-weight: 500; }
-    a:hover { text-decoration: underline; }
-    footer {
-      text-align: center;
-      padding: 32px 40px;
-      border-top: 1px solid #E7E5E4;
-      font-size: 13px;
-      color: #A8A29E;
-    }
-    footer a { color: #78716C; margin: 0 12px; }
-    footer a:hover { color: #D97706; }
+    :root { --bg:#F4F3EC; --card:#FFFFFF; --surface:#EAECE4; --text:#26372C; --sub:#788477; --accent:#52765A; --highlight:#DDE9C9; --line:#E0E3DA; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    a { color: var(--accent); }
+    .wrap { max-width: 760px; margin: 0 auto; padding: 28px 16px 56px; }
+    .top { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-weight: 800; font-size: 20px; }
+    .top img { width: 36px; height: 36px; }
+    .top span { color: var(--accent); }
+    h1 { font-size: 34px; letter-spacing: -0.8px; margin: 28px 0 6px; }
+    .meta { color: var(--sub); font-size: 14px; }
+    .summary { background: var(--highlight); border-radius: 18px; padding: 18px 20px; margin: 24px 0 8px; }
+    .summary h2 { margin: 0 0 8px; font-size: 17px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 22px 22px 8px; margin-top: 16px; }
+    h2 { font-size: 20px; letter-spacing: -0.3px; margin: 0 0 10px; }
+    h3 { font-size: 16px; margin: 16px 0 6px; }
+    p, li { font-size: 15.5px; margin-bottom: 12px; }
+    p, li, td { color: #3A4A3F; }
+    ul { padding-left: 22px; }
+    li { margin-bottom: 6px; }
+    table { width: 100%; border-collapse: collapse; margin: 6px 0 16px; font-size: 14.5px; }
+    th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { background: var(--surface); color: var(--text); font-weight: 700; }
+    .scroll { overflow-x: auto; }
+    footer { margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--sub); font-size: 13px; text-align: center; }
+    footer nav { display: flex; flex-wrap: wrap; gap: 18px; justify-content: center; margin-bottom: 8px; }
+    footer a { text-decoration: none; font-weight: 600; }
   </style>
 </head>
 <body>
-<header>
-  <div class="logo-mark">K</div>
-  <span class="logo-text">Kin<span>log</span></span>
-  <span class="badge">Legal</span>
-</header>
- 
-<main>
-  <div class="page-tag">Legal</div>
+<div class="wrap">
+  <a class="top" href="https://solana.digitiumlabs.com"><img src="solfit-logo.png" alt="">Sol<span>Fit</span></a>
+
   <h1>Privacy Policy</h1>
-  <div class="subtitle">Last updated: October 10, 2026. Effective immediately.</div>
-  <div class="divider"></div>
- 
-  <section>
-    <h2>1. Introduction</h2>
-    <p>SolFit ("we", "our", or "the app") is a fitness tracking application built on the Solana blockchain, operated by an independent developer based in the Republic of Korea. This Privacy Policy explains how we collect, use, and protect your information when you use SolFit on Android (Solana Seeker).</p>
-    <p>By using SolFit, you agree to the practices described in this policy.</p>
-  </section>
- 
-  <section>
-    <h2>2. Information We Collect</h2>
-    <p><strong>Camera Access</strong><br/>SolFit uses your device camera solely for real-time pose detection to count squat repetitions. <span class="highlight">No video is recorded, stored, or transmitted.</span> All pose analysis occurs locally on your device using MediaPipe.</p>
-    
-    <p><strong>Workout Data</strong><br/>We store the following data in Firebase Firestore:</p>
+  <p class="meta">Last updated: 13 October 2026 · Applies to the SolFit Android app (version 1.4.0 and later) and solana.digitiumlabs.com</p>
+
+  <div class="summary">
+    <h2>The short version</h2>
     <ul>
-      <li>Total squat counts and workout history</li>
-      <li>Daily and weekly fitness goals and progress</li>
-      <li>Streak counts and points balance</li>
-      <li>Badge achievement and claim records</li>
-      <li>Locked In records: daily squat totals counted by our server, whether you finished, your Square pick, its result and Reward, and whether your deposit was returned</li>
+      <li>Your camera is processed <strong>on your phone</strong>. Video is never recorded, stored or uploaded.</li>
+      <li>Your account is your <strong>public Solana wallet address</strong>. We don't ask for your name, email, phone number or location.</li>
+      <li>We store your workouts, points, streaks and badges so they follow your wallet. Only your own signed-in session can read them.</li>
+      <li>We <strong>never</strong> ask for or receive your private key or recovery phrase. Signing in is free and sends no transaction.</li>
+      <li>No advertising, no analytics trackers, no selling of data.</li>
     </ul>
-    
-    <p><strong>Wallet Address and Sign-In</strong><br/>Your public wallet address is your SolFit account ID, and your workout records, points and badges are stored under it. To sign in, your wallet signs a one-time "Sign In With Solana" message for solfit.digitiumlabs.com. Signing sends no transaction and costs nothing. Our server checks the signature and does not store the message or the signature. We keep your wallet address as a Firebase Authentication account, the times of your first and latest sign-in, and each one-time code (nonce) used with your address, which a daily cleanup job deletes after it expires. The app keeps your sign-in session and your wallet's connection token on your phone. We never access your private keys or seed phrase.</p>
-  </section>
- 
-  <section>
-    <h2>3. How We Use Your Data</h2>
-    <ul>
-      <li>Display your personal fitness progress and history</li>
-      <li>Track daily goals, streaks, and achievements</li>
-      <li>Record your badge claims and add their points to your total</li>
-      <li>Confirm that you own the wallet you sign in with</li>
-      <li>Improve app performance and functionality</li>
-    </ul>
-  </section>
- 
-  <section>
-    <h2>4. Data Sharing</h2>
-    <p>We do not sell, rent, or share your personal data with third parties. Your workout data is stored in Firebase Firestore (Google) and is used solely to provide app functionality. Badge claim transactions are recorded on the Solana public blockchain by nature of the technology. Locked In deposits, picks, Reward claims and returns are Solana transactions and are public, along with your wallet address.</p>
-  </section>
- 
-  <section>
-    <h2>5. Data Retention &amp; Deletion</h2>
-    <p>Your workout data is retained as long as you use the app. You may request deletion of your data at any time by contacting us at <a href="mailto:jamielimq@gmail.com">jamielimq@gmail.com</a>. On-chain records such as badge claims and Locked In transactions on the Solana blockchain cannot be deleted due to the immutable nature of blockchain technology.</p>
-  </section>
- 
-  <section>
-    <h2>6. Security</h2>
-    <p>We use industry-standard security measures including Firebase security rules and HTTPS encryption. Camera data is never stored or transmitted — all processing occurs on-device in real time.</p>
-  </section>
- 
-  <section>
-    <h2>7. Your Rights — Global Users</h2>
-    <p>Regardless of your location, you have the following rights regarding your personal data:</p>
-    <ul>
-      <li><strong>Right to Know:</strong> What data we collect and how it is used</li>
-      <li><strong>Right to Access:</strong> Request a copy of your personal data</li>
-      <li><strong>Right to Deletion:</strong> Request removal of your data</li>
-      <li><strong>Right to Correction:</strong> Request correction of inaccurate data</li>
-      <li><strong>Right to Object:</strong> Object to certain data processing</li>
-    </ul>
-    <p>To exercise any of these rights, please contact <a href="mailto:jamielimq@gmail.com">jamielimq@gmail.com</a>. We will respond within 30 days.</p>
- 
-    <h3>EU/EEA Users (GDPR)</h3>
-    <p>If you are located in the European Union or European Economic Area, you have additional rights under the General Data Protection Regulation (GDPR), including the right to data portability and the right to lodge a complaint with your local data protection authority.</p>
- 
-    <h3>California Residents (CCPA)</h3>
-    <p>If you are a California resident, you have rights under the California Consumer Privacy Act (CCPA), including the right to know what personal information we collect, the right to request deletion of personal information, and the right to opt-out of the sale of personal information. <strong>SolFit does not sell personal information.</strong></p>
- 
-    <h3>Korean Users</h3>
-    <p>If you are located in the Republic of Korea, your data is handled in accordance with the Personal Information Protection Act (PIPA).</p>
-  </section>
- 
-  <section>
-    <h2>8. Children's Privacy</h2>
-    <p>SolFit is not directed to children under the age of 13 (or the applicable age of digital consent in your jurisdiction — 14 in the Republic of Korea, 16 in most EU countries). We do not knowingly collect personal information from children below the applicable age. If you believe a child has provided us with personal information, please contact us immediately at <a href="mailto:jamielimq@gmail.com">jamielimq@gmail.com</a>.</p>
-  </section>
- 
-  <section>
-    <h2>9. International Data Transfers</h2>
-    <p>Your data may be transferred to and stored on servers located outside your country of residence (primarily Firebase servers operated by Google). By using SolFit, you consent to this transfer. We take reasonable steps to ensure your data is protected in accordance with this Privacy Policy.</p>
-  </section>
- 
-  <section>
-    <h2>10. Changes to This Policy</h2>
-    <p>We may update this Privacy Policy from time to time. Updates will be posted on this page with a revised effective date. Continued use of SolFit after changes constitutes acceptance of the updated policy.</p>
-  </section>
- 
-  <section>
-    <h2>11. Contact</h2>
-    <p>For questions or requests regarding this Privacy Policy, please contact:</p>
-    <p><a href="mailto:jamielimq@gmail.com">jamielimq@gmail.com</a></p>
-    <p><strong>Data Controller:</strong> Jamielim, Republic of Korea</p>
-  </section>
-</main>
- 
-<footer>
-  <div>
-    <a href="index.html">Home</a>
-    <a href="terms.html">Terms of Service</a>
-    <a href="https://github.com/Jamielimq/kinlog">GitHub</a>
   </div>
-  <div style="margin-top: 8px;">© 2026 SolFit. MIT Licensed.</div>
-</footer>
+
+  <div class="card">
+    <h2>1. Who we are</h2>
+    <p>SolFit is operated by <strong>Digitium Labs</strong> ("we", "us"), based in India. Digitium Labs is the data fiduciary (data controller) for the personal data described here. Contact: <a href="mailto:nakshatra.sharma3012@gmail.com">nakshatra.sharma3012@gmail.com</a>.</p>
+  </div>
+
+  <div class="card">
+    <h2>2. What we collect</h2>
+    <div class="scroll"><table>
+      <tr><th>Data</th><th>Where it comes from</th><th>Why</th></tr>
+      <tr><td>Public Solana wallet address</td><td>Your wallet app, when you connect</td><td>It is your account identifier</td></tr>
+      <tr><td>Sign-in records: first and latest sign-in time, and each one-time sign-in code used with your address</td><td>Our sign-in server</td><td>To verify sign-ins and stop the same signature being reused</td></tr>
+      <tr><td>Workouts: exercise, reps, duration, date and time</td><td>The app, when you finish a session</td><td>Your history, goals, streaks and points</td></tr>
+      <tr><td>Points, streaks, goals and badges, including badge-claim transaction signatures and memos</td><td>The app</td><td>Progress and rewards</td></tr>
+      <tr><td>Technical request data such as IP address and time</td><td>Automatically, by our hosting providers</td><td>Security, abuse prevention and keeping the service running</td></tr>
+    </table></div>
+
+    <h3>What we don't collect</h3>
+    <ul>
+      <li><strong>Camera images or video.</strong> Each frame is analysed on your phone to find hip, knee and ankle positions, then deleted. Only the resulting rep count is saved.</li>
+      <li>Your private key, recovery phrase or wallet password.</li>
+      <li>Your name, email, phone number, contacts, photos or precise location.</li>
+      <li>Health records. SolFit counts squats; it doesn't collect medical information.</li>
+    </ul>
+
+    <h3>Stored only on your phone</h3>
+    <p>Your wallet connection token and any badge claims waiting for confirmation are kept in your phone's encrypted secure storage. They are removed when you disconnect or uninstall the app.</p>
+  </div>
+
+  <div class="card">
+    <h2>3. How we use it</h2>
+    <ul>
+      <li>To sign you in and keep your data tied to your wallet.</li>
+      <li>To show your progress, goals, streaks and badges, and to award points.</li>
+      <li>To record badge claims you choose to make.</li>
+      <li>To protect the service against fraud and abuse, and to fix problems.</li>
+    </ul>
+    <p>We don't use your data for advertising or profiling, and we don't sell or rent it.</p>
+  </div>
+
+  <div class="card">
+    <h2>4. Services that process data for us</h2>
+    <div class="scroll"><table>
+      <tr><th>Provider</th><th>Role</th><th>Location</th></tr>
+      <tr><td>Google Firebase (Authentication, Cloud Firestore)</td><td>Sign-in sessions and storage of your SolFit data</td><td>India (Mumbai region)</td></tr>
+      <tr><td>Render</td><td>Hosts the sign-in server that verifies wallet signatures</td><td>Singapore</td></tr>
+      <tr><td>GitHub</td><td>Hosts our website and the APK download</td><td>Global</td></tr>
+      <tr><td>Solana RPC providers (Solana's public endpoint, or Helius)</td><td>Read balances and blockchain data, and send transactions you approve</td><td>Global</td></tr>
+    </table></div>
+    <p>Your wallet app, such as Phantom or Solflare, is a separate service with its own privacy policy. We may disclose data if required by law or to protect the rights and safety of users and the service.</p>
+  </div>
+
+  <div class="card">
+    <h2>5. The Solana blockchain is public</h2>
+    <p>When you claim a badge, you approve a Solana transaction: a small SOL fee with a memo naming the badge. That transaction, your wallet address and the memo become <strong>permanently public</strong> on the Solana blockchain. Neither we nor anyone else can change or delete them. SolFit also reads public on-chain data, such as whether your wallet stakes SKR, to award related badges.</p>
+  </div>
+
+  <div class="card">
+    <h2>6. Retention and deletion</h2>
+    <ul>
+      <li>We keep your SolFit data while your account is in use.</li>
+      <li>You can ask us to delete it at any time by emailing us from the contact above. Include your wallet address, and be ready to prove control of it, for example by signing a message. We delete your data from our database within 30 days.</li>
+      <li>Security records, such as used sign-in codes, are kept only as long as needed to prevent replay and abuse.</li>
+      <li>Blockchain records can't be deleted (see section 5).</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>7. Security</h2>
+    <p>Sign-in uses a one-time code and a cryptographic signature from your wallet, checked on our server. Data is sent over HTTPS. Database rules let each wallet's signed-in session access only that wallet's data. Server credentials are never shipped inside the app. No system is perfectly secure, but we work to protect your information and will act promptly on any breach as the law requires.</p>
+  </div>
+
+  <div class="card">
+    <h2>8. Your rights</h2>
+    <h3>India: Digital Personal Data Protection Act, 2023</h3>
+    <ul>
+      <li>Access a summary of your personal data and how it is processed.</li>
+      <li>Correct, complete, update or erase your personal data.</li>
+      <li>Withdraw consent: stop using the app and ask us to erase your data.</li>
+      <li>Nominate another person to exercise your rights in case of death or incapacity.</li>
+      <li>Grievance redressal: write to our grievance contact below. If you're not satisfied, you may approach the Data Protection Board of India.</li>
+    </ul>
+    <h3>Users elsewhere</h3>
+    <p>Depending on where you live, for example under the EU/UK GDPR or California's CCPA/CPRA, you may also have rights to object to or restrict processing, to data portability, and to complain to your local authority. We honour these requests wherever they apply. We don't sell or share personal information for cross-context behavioural advertising.</p>
+    <p>To make any request, email us from the contact in section 1. We reply within 30 days.</p>
+  </div>
+
+  <div class="card">
+    <h2>9. Children</h2>
+    <p>SolFit is intended for users <strong>18 and over</strong>, because it involves self-custody crypto wallets and blockchain transactions. We don't knowingly collect data from children. If you believe a child has used SolFit, contact us and we will delete the data.</p>
+  </div>
+
+  <div class="card">
+    <h2>10. International transfers</h2>
+    <p>Your data is stored in India. Some providers, such as our sign-in server in Singapore, process it in other countries. We use providers with recognised security practices, and we transfer data only as permitted by applicable law.</p>
+  </div>
+
+  <div class="card">
+    <h2>11. Changes</h2>
+    <p>We may update this policy. We'll change the "last updated" date above and, for significant changes, tell you in the app or on our website. Continuing to use SolFit after an update means you accept the revised policy.</p>
+  </div>
+
+  <div class="card">
+    <h2>12. Contact and grievance officer</h2>
+    <p><strong>Digitium Labs</strong>, India<br>Privacy and grievance contact: <a href="mailto:nakshatra.sharma3012@gmail.com">nakshatra.sharma3012@gmail.com</a></p>
+  </div>
+
+  <footer>
+    <nav>
+      <a href="https://solana.digitiumlabs.com">Download SolFit</a>
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+    </nav>
+    <p>© 2026 Digitium Labs. SolFit is based on Kinlog by Jamielim (MIT License).</p>
+  </footer>
+</div>
 </body>
 </html>
