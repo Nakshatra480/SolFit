@@ -35,7 +35,7 @@ On-device pose detection counts every rep. Your wallet is your account. Streaks,
 <img src="docs/screenshots/goals.png" width="15%" alt="Goals" />
 <img src="docs/screenshots/profile.png" width="15%" alt="Profile" />
 <br/>
-<sub>Launch · Home · Workout · Badges · Goals · Profile (release build, Natural Motion theme)</sub>
+<sub>Launch · Home · Workout · Badges · Goals · Profile (design preview with sample data, Natural Motion theme)</sub>
 </div>
 
 ---
