@@ -370,9 +370,7 @@ Releases follow [`docs/RELEASING.md`](docs/RELEASING.md).
 
 ---
 
-## 🙏 Credits & license
-
-SolFit builds on open-source work by **Jamielim**, released under the MIT License, including the clinical squat thresholds, the original pose pipeline and the Locked In design.
+## 📄 License
 
 Released under the MIT License. See [LICENSE](LICENSE).
 
