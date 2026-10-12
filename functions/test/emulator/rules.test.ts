@@ -1,4 +1,4 @@
-// firestore.rules against the Firestore emulator (project demo-solfit). The signed-out cases replay
+// firestore.rules (owner-only) against the Firestore emulator (project demo-solfit). The signed-out cases replay
 // the exact writes and reads the live v1.3.3 app makes.
 import fs from "node:fs";
 import path from "node:path";
@@ -119,8 +119,10 @@ async function expectAll(kind: "succeed" | "fail", ops: [string, () => Promise<u
 }
 const withoutCatalog = (ops: [string, () => Promise<unknown>][]) => ops.filter(([n]) => n !== "read challenges catalog");
 
-test("v1.3.3 keeps working, signed out, for a wallet that never signed in", async () => {
-  await expectAll("succeed", legacyOps(signedOut(), W1));
+// SolFit is owner-only: there are no pre-sign-in users, so signed-out clients get nothing but the
+// public quest catalog, whether or not the wallet has ever signed in.
+test("signed-out clients are refused for a wallet that never signed in", async () => {
+  await expectAll("fail", withoutCatalog(legacyOps(signedOut(), W1)));
 });
 
 test("a wallet that signed in is closed to signed-out clients", async () => {
@@ -193,9 +195,9 @@ test("signed-in workouts: owner only, plausible, immutable", async () => {
   // Someone else's token, or none, cannot create a signed-in workout for a wallet.
   await assertFails(addDoc(collection(signedIn(W3), `users/${W2}/workouts`), good()));
   await assertFails(addDoc(collection(signedOut(), `users/${W1}/workouts`), { ...good(), uid: W1 }));
-  // Signed-out access to an unlinked wallet's workouts stays as before, but cannot mark or touch signed ones.
+  // Signed out, nothing: not even an unlinked wallet's own workouts (SolFit has no pre-sign-in users).
   const out = signedOut();
-  await assertSucceeds(updateDoc(doc(out, `users/${W1}/workouts/legacy`), { reps: 12 }));
+  await assertFails(updateDoc(doc(out, `users/${W1}/workouts/legacy`), { reps: 12 }));
   await assertFails(updateDoc(doc(out, `users/${W1}/workouts/legacy`), { uid: W1 }));
   await assertFails(updateDoc(doc(out, `users/${W1}/workouts/signed`), { rawReps: 300 }));
   await assertFails(deleteDoc(doc(out, `users/${W1}/workouts/signed`)));

@@ -9,6 +9,7 @@ import {
   where,
 } from '@react-native-firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
+import { snapshotHandlers } from '../lib/snapshot';
 import { elapsedDays, localDayStartMs } from './challengeProgress';
 
 // ───────────────────────────────────────────────────────────────
@@ -199,16 +200,25 @@ export function useChallenges(address: string | null) {
       where('isActive', '==', true),
       orderBy('displayOrder', 'asc'),
     );
-    const unsubscribe = onSnapshot(q, (snap: FirebaseFirestoreTypes.QuerySnapshot) => {
-      setCatalog(
-        snap.docs.map(d => ({
-          ...(d.data() as Omit<ChallengeCatalog, 'id'>),
-          id: d.id,
-        })),
-      );
-      setCatalogLoading(false);
-    });
-    return unsubscribe;
+    // This query needs the challenges (isActive, displayOrder) composite index in firestore.indexes.json;
+    // without it the listen fails with failed-precondition and the catalog stays empty.
+    const [next, fail] = snapshotHandlers<FirebaseFirestoreTypes.QuerySnapshot>(
+      'challenges catalog',
+      snap => {
+        setCatalog(
+          snap.docs.map(d => ({
+            ...(d.data() as Omit<ChallengeCatalog, 'id'>),
+            id: d.id,
+          })),
+        );
+        setCatalogLoading(false);
+      },
+      () => {
+        setCatalog([]);
+        setCatalogLoading(false);
+      },
+    );
+    return onSnapshot(q, next, fail);
   }, []);
 
   // User instances
@@ -222,16 +232,20 @@ export function useChallenges(address: string | null) {
     setInstancesLoading(true);
     const db = getFirestore(getApp());
     const ref = collection(db, 'users', address, 'userChallenges');
-    const unsubscribe = onSnapshot(ref, (snap: FirebaseFirestoreTypes.QuerySnapshot) => {
-      setInstances(
-        snap.docs.map(d => ({
-          ...(d.data() as Omit<UserChallengeInstance, 'id'>),
-          id: d.id,
-        })),
-      );
-      setInstancesLoading(false);
-    });
-    return unsubscribe;
+    const [next, fail] = snapshotHandlers<FirebaseFirestoreTypes.QuerySnapshot>(
+      'user challenges',
+      snap => {
+        setInstances(
+          snap.docs.map(d => ({
+            ...(d.data() as Omit<UserChallengeInstance, 'id'>),
+            id: d.id,
+          })),
+        );
+        setInstancesLoading(false);
+      },
+      () => setInstancesLoading(false),
+    );
+    return onSnapshot(ref, next, fail);
   }, [address]);
 
   const challenges = useMemo<ChallengeView[]>(

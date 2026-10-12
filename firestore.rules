@@ -27,10 +27,11 @@ service cloud.firestore {
       return exists(/databases/$(database)/documents/authLinks/$(wallet));
     }
 
-    // The owner's token always; no token only while the wallet has never signed in.
+    // SolFit: owner only. A wallet's data needs that wallet's Firebase token, issued by the
+    // sign-in server after it verifies the wallet signature. (Kinlog also let unsigned clients in
+    // for wallets that had never signed in; SolFit has no such legacy users.)
     function legacyAccess(wallet) {
-      return isValidWallet(wallet)
-        && (isOwner(wallet) || (request.auth == null && !linked(wallet)));
+      return isValidWallet(wallet) && isOwner(wallet);
     }
 
     function isTester() {

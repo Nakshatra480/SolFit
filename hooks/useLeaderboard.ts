@@ -1,6 +1,7 @@
 import { getApp } from '@react-native-firebase/app';
 import { getFirestore, collection, query, orderBy, limit, onSnapshot, doc, getDoc, setDoc, FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { useState, useEffect } from 'react';
+import { snapshotHandlers } from '../lib/snapshot';
 
 export interface LeaderboardEntry {
   address: string;
@@ -19,11 +20,14 @@ export function useLeaderboard(gameId: string = '2048') {
       orderBy('score', 'desc'),
       limit(20)
     );
-    const unsubscribe = onSnapshot(q, (snapshot: FirebaseFirestoreTypes.QuerySnapshot) => {
-      const data = snapshot.docs.map(d => d.data() as LeaderboardEntry);
-      setEntries(data);
-      setLoading(false);
-    });
+    const unsubscribe = onSnapshot(q, ...snapshotHandlers<FirebaseFirestoreTypes.QuerySnapshot>(
+      'leaderboard',
+      snapshot => {
+        setEntries(snapshot.docs.map(d => d.data() as LeaderboardEntry));
+        setLoading(false);
+      },
+      () => setLoading(false),
+    ));
     return unsubscribe;
   }, [gameId]);
 

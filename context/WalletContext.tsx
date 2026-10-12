@@ -6,7 +6,23 @@ import { transact } from '@solana-mobile/mobile-wallet-adapter-protocol-web3js';
 import { PublicKey } from '@solana/web3.js';
 import * as SecureStore from 'expo-secure-store';
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { Alert, Linking } from 'react-native';
 import { fetchSignInPayload, signInAddress, SignInError, signInErrorMessage, verifySignIn } from '../lib/signIn';
+import { connectFailure, WALLET_APPS } from '../lib/walletErrors';
+
+/** A connect that fails before any wallet is connected has no screen to show it on, so it alerts. */
+function showConnectFailure(e: unknown) {
+  const f = connectFailure(e);
+  if (f.kind === 'cancelled') return;
+  if (f.kind === 'no_wallet') {
+    Alert.alert(f.title, f.message, [
+      ...WALLET_APPS.map(w => ({ text: `Get ${w.name}`, onPress: () => void Linking.openURL(w.url).catch(() => {}) })),
+      { text: 'Not now', style: 'cancel' as const },
+    ]);
+    return;
+  }
+  Alert.alert(f.title, f.message);
+}
 
 // Firebase session of the connected wallet. Once a wallet has signed in, the rules refuse its data
 // to anyone without that wallet's token, so nothing reads or writes users/{wallet} before 'ready'.
@@ -323,7 +339,8 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       if (payload) await completeSignIn(a);
       else setSignInError(signInErrorMessage(new SignInError('unavailable')));
     } catch (e: any) {
-      console.log('Wallet connect error:', e?.message ?? e);
+      console.log('Wallet connect error:', e?.code ?? '', e?.message ?? e);
+      showConnectFailure(e);
     } finally {
       setConnecting(false);
     }
@@ -342,8 +359,9 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       await adopt(a);
       await completeSignIn(a);
     } catch (e: any) {
-      console.log('Sign-in error:', e?.message ?? e);
+      console.log('Sign-in error:', e?.code ?? '', e?.message ?? e);
       if (e instanceof SignInError) setSignInError(signInErrorMessage(e));
+      else showConnectFailure(e);
     } finally {
       setSigningIn(false);
     }

@@ -2,6 +2,7 @@ import { getApp } from '@react-native-firebase/app';
 import { collection, FirebaseFirestoreTypes, getFirestore, onSnapshot } from '@react-native-firebase/firestore';
 import { useEffect, useState } from 'react';
 import { dateKeyOf, dayTotals, goalDays, streakStats, type WorkoutLite } from '../lib/record';
+import { snapshotHandlers } from '../lib/snapshot';
 
 export interface UserStats {
   points: number;
@@ -82,26 +83,35 @@ export function useUserStats(address: string | null) {
       if (pointsReady && workoutsReady) setLoading(false);
     };
 
+    // A failed listen counts as read (with what it had), so loading still ends.
     const unsubPoints = onSnapshot(
       collection(db, 'users', address, 'points_history'),
-      (snap: FirebaseFirestoreTypes.QuerySnapshot) => {
-        pointsTotal = 0;
-        snap.forEach(d => { pointsTotal += d.data().amount ?? 0; });
-        pointsReady = true;
-        compute();
-      },
+      ...snapshotHandlers<FirebaseFirestoreTypes.QuerySnapshot>(
+        'stats points',
+        snap => {
+          pointsTotal = 0;
+          snap.forEach(d => { pointsTotal += d.data().amount ?? 0; });
+          pointsReady = true;
+          compute();
+        },
+        () => { pointsReady = true; compute(); },
+      ),
     );
     const unsubWorkouts = onSnapshot(
       collection(db, 'users', address, 'workouts'),
-      (snap: FirebaseFirestoreTypes.QuerySnapshot) => {
-        workoutsCache = snap.docs.map(d => ({
-          reps: d.data().reps ?? 0,
-          rawReps: typeof d.data().rawReps === 'number' ? d.data().rawReps : undefined,
-          createdAt: d.data().createdAt ?? 0,
-        }));
-        workoutsReady = true;
-        compute();
-      },
+      ...snapshotHandlers<FirebaseFirestoreTypes.QuerySnapshot>(
+        'stats workouts',
+        snap => {
+          workoutsCache = snap.docs.map(d => ({
+            reps: d.data().reps ?? 0,
+            rawReps: typeof d.data().rawReps === 'number' ? d.data().rawReps : undefined,
+            createdAt: d.data().createdAt ?? 0,
+          }));
+          workoutsReady = true;
+          compute();
+        },
+        () => { workoutsReady = true; compute(); },
+      ),
     );
 
     return () => {

@@ -1,6 +1,7 @@
 import { getApp } from '@react-native-firebase/app';
 import { collection, FirebaseFirestoreTypes, getFirestore, onSnapshot } from '@react-native-firebase/firestore';
 import { useEffect, useMemo, useState } from 'react';
+import { snapshotHandlers } from '../lib/snapshot';
 
 export interface BadgeNFTMetadata {
   symbol: string;
@@ -95,7 +96,7 @@ export function useBadges(address: string | null) {
     setLoading(true);
     const db = getFirestore(getApp());
     const badgesRef = collection(db, 'users', address, 'badges');
-    const unsub = onSnapshot(badgesRef, (snap: FirebaseFirestoreTypes.QuerySnapshot) => {
+    const unsub = onSnapshot(badgesRef, ...snapshotHandlers<FirebaseFirestoreTypes.QuerySnapshot>('badges', snap => {
       const map: Record<string, EarnedEntry> = {};
       snap.docs.forEach(d => {
         if (d.data().earned) {
@@ -108,7 +109,7 @@ export function useBadges(address: string | null) {
       });
       setEarnedMap(map);
       setLoading(false);
-    });
+    }, () => setLoading(false)));
     return unsub;
   }, [address]);
 
@@ -118,7 +119,7 @@ export function useBadges(address: string | null) {
     if (!address) return;
     const db = getFirestore(getApp());
     const ref = collection(db, 'users', address, 'userChallenges');
-    const unsub = onSnapshot(ref, (snap: FirebaseFirestoreTypes.QuerySnapshot) => {
+    const unsub = onSnapshot(ref, ...snapshotHandlers<FirebaseFirestoreTypes.QuerySnapshot>('badge quest runs', snap => {
       const counts: Record<string, number> = {};
       snap.docs.forEach(d => {
         const data = d.data();
@@ -127,7 +128,7 @@ export function useBadges(address: string | null) {
         }
       });
       setInstanceCounts(counts);
-    });
+    }));
     return unsub;
   }, [address]);
 
