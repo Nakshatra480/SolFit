@@ -1,7 +1,7 @@
 import { defineSecret } from "firebase-functions/params";
 
-// Firestore is in asia-northeast3 (Seoul); Firestore triggers must run in the same region.
-export const REGION = "asia-northeast3";
+// Firestore is in asia-south1 (Mumbai); Firestore triggers must run in the same region.
+export const REGION = "asia-south1";
 
 // Sign In With Solana. SolFit's web address is solfit.digitiumlabs.com (GitHub Pages under a custom domain), which
 // also hosts the app's Digital Asset Links (/.well-known/assetlinks.json).

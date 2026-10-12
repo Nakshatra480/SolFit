@@ -1,6 +1,8 @@
 {
   "projects": {
-    "default": "kinlog-6549a"
+    "default": "solfit-prod-2026",
+    "solfit": "solfit-prod-2026",
+    "kinlog-original": "kinlog-6549a"
   },
   "targets": {},
   "etags": {}

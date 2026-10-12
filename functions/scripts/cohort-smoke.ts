@@ -13,7 +13,7 @@ import { buildSignInMessage } from "../src/auth/siws.ts";
 import * as P from "../src/chain/program.ts";
 import { signBytes } from "../test/support/sign.ts";
 
-const FN = "https://asia-northeast3-kinlog-6549a.cloudfunctions.net";
+const FN = "https://asia-south1-solfit-prod-2026.cloudfunctions.net";
 const KEY = { kind: 0, id: 2 };
 const conn = new Connection("https://api.mainnet-beta.solana.com", "confirmed");
 const configText = fs.readFileSync(path.resolve("../docs/private/firebase-web-config.json"), "utf8");

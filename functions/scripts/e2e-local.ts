@@ -17,7 +17,7 @@ import { signBytes } from "../test/support/sign.ts";
 import { COMMON, DAY_SECONDS, DEPOSIT, loadKey, loadState, RPC, TEST_COHORT } from "./local-common.ts";
 
 const PROJECT = "demo-solfit";
-const FN = `http://127.0.0.1:5001/${PROJECT}/asia-northeast3`;
+const FN = `http://127.0.0.1:5001/${PROJECT}/asia-south1`;
 const dir = process.argv[2];
 if (!dir) throw new Error("usage: e2e-local.ts <dir>");
 const state = loadState(dir);

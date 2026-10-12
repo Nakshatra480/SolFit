@@ -1,5 +1,5 @@
 // Cloud Functions entry points. Logic lives in the modules; this file only wires triggers, secrets
-// and limits. Every function runs in asia-northeast3 with automatic retries off.
+// and limits. Every function runs in asia-south1 with automatic retries off.
 import { Connection } from "@solana/web3.js";
 import { initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";

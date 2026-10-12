@@ -12,7 +12,7 @@ import { buildSignInMessage } from "../src/auth/siws.ts";
 import { kstDateKey } from "../src/time.ts";
 import { signBytes } from "../test/support/sign.ts";
 
-const FN = "https://asia-northeast3-kinlog-6549a.cloudfunctions.net";
+const FN = "https://asia-south1-solfit-prod-2026.cloudfunctions.net";
 const TEST_USER2 = "DfdQbN6pkJf1t9d52CWx8cGQEzKJ2mAadw6JRxdzP2Ap"; // public address; its key is not opened
 const configText = fs.readFileSync(path.resolve("../docs/private/firebase-web-config.json"), "utf8");
 const config = JSON.parse(configText.slice(configText.indexOf("{"), configText.lastIndexOf("}") + 1));

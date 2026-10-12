@@ -4,8 +4,12 @@
 import type { SignInPayload, SignInResult } from '@solana-mobile/mobile-wallet-adapter-protocol';
 import { PublicKey } from '@solana/web3.js';
 
-const FUNCTIONS_URL = 'https://asia-northeast3-kinlog-6549a.cloudfunctions.net';
-const NONCE_TIMEOUT_MS = 8_000;
+// SolFit's own sign-in server (functions/src/standalone.ts), set at build time. Unset means sign-in is
+// unavailable: the app never falls back to another project's server.
+const FUNCTIONS_URL = (process.env.EXPO_PUBLIC_AUTH_URL ?? '').replace(/\/+$/, '');
+// The sign-in server may be asleep (free hosting spins down when idle and takes ~1 min to wake), so
+// the first request waits long enough to cover a cold start.
+const NONCE_TIMEOUT_MS = 75_000;
 // authVerify can take a few seconds on a cold start.
 const VERIFY_TIMEOUT_MS = 20_000;
 
@@ -28,6 +32,10 @@ async function fetchWithTimeout(url: string, init: RequestInit, ms: number): Pro
 
 /** The sign-in payload to pass to MWA `authorize`, or null when the server can't be reached. */
 export async function fetchSignInPayload(): Promise<SignInPayload | null> {
+  if (!FUNCTIONS_URL) {
+    console.log('authNonce skipped: EXPO_PUBLIC_AUTH_URL is not set');
+    return null;
+  }
   try {
     const res = await fetchWithTimeout(`${FUNCTIONS_URL}/authNonce`, { method: 'GET' }, NONCE_TIMEOUT_MS);
     if (!res.ok) {
@@ -51,6 +59,7 @@ export function signInAddress(result: SignInResult): string {
 
 /** Exchanges a wallet's sign-in signature for a Firebase custom token. Throws SignInError. */
 export async function verifySignIn(result: SignInResult): Promise<string> {
+  if (!FUNCTIONS_URL) throw new SignInError('unavailable');
   const body = {
     address: signInAddress(result),
     message: result.signed_message,
