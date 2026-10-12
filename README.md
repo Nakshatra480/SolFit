@@ -253,7 +253,7 @@ The program doesn't link `ore-api`. The round math is ported and tested against 
 
 | Part | Status |
 |---|---|
-| Anchor program (`onchain/programs/locked_in`) | complete; verified build deployed to mainnet by the original Kinlog project (`9vG8Qcwv…`, Squads-administered) |
+| Anchor program (`onchain/programs/locked_in`) | complete; a verified build exists on mainnet from an earlier deployment (`9vG8Qcwv…`, Squads-administered), not operated by SolFit |
 | Server jobs (`onWorkoutCreate`, `everyMinute`, `daily`) | in `functions/`; **not deployed for SolFit** |
 | App screens (`app/locked-in/`, `components/lockedIn/`) | included; the Home card appears only when live cohorts exist |
 
@@ -372,9 +372,9 @@ Releases follow [`docs/RELEASING.md`](docs/RELEASING.md).
 
 ## 🙏 Credits & license
 
-SolFit is based on **[Kinlog](https://github.com/Jamielimq/kinlog)** by **Jamielim** (Physical Therapist · Athletic Trainer), released under the MIT License. The clinical squat thresholds, the original pose pipeline and the Locked In design come from that work.
+SolFit builds on open-source work by **Jamielim**, released under the MIT License, including the clinical squat thresholds, the original pose pipeline and the Locked In design.
 
-MIT © 2026 Jamielim, with SolFit modifications. See [LICENSE](LICENSE).
+Released under the MIT License. See [LICENSE](LICENSE).
 
 <div align="center">
 <br/>
